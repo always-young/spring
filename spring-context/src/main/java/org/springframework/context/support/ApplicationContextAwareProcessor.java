@@ -33,32 +33,7 @@ import org.springframework.context.ResourceLoaderAware;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringValueResolver;
 
-/**
- * {@link BeanPostProcessor} implementation that supplies the {@code ApplicationContext},
- * {@link org.springframework.core.env.Environment Environment}, or
- * {@link StringValueResolver} for the {@code ApplicationContext} to beans that
- * implement the {@link EnvironmentAware}, {@link EmbeddedValueResolverAware},
- * {@link ResourceLoaderAware}, {@link ApplicationEventPublisherAware},
- * {@link MessageSourceAware}, and/or {@link ApplicationContextAware} interfaces.
- *
- * <p>Implemented interfaces are satisfied in the order in which they are
- * mentioned above.
- *
- * <p>Application contexts will automatically register this with their
- * underlying bean factory. Applications do not use this directly.
- *
- * @author Juergen Hoeller
- * @author Costin Leau
- * @author Chris Beams
- * @since 10.10.2003
- * @see org.springframework.context.EnvironmentAware
- * @see org.springframework.context.EmbeddedValueResolverAware
- * @see org.springframework.context.ResourceLoaderAware
- * @see org.springframework.context.ApplicationEventPublisherAware
- * @see org.springframework.context.MessageSourceAware
- * @see org.springframework.context.ApplicationContextAware
- * @see org.springframework.context.support.AbstractApplicationContext#refresh()
- */
+
 class ApplicationContextAwareProcessor implements BeanPostProcessor {
 
 	private final ConfigurableApplicationContext applicationContext;

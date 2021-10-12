@@ -26,199 +26,49 @@ import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
 import org.springframework.lang.Nullable;
 
 /**
- * Extension of the {@link org.springframework.beans.factory.BeanFactory}
- * interface to be implemented by bean factories that are capable of
- * autowiring, provided that they want to expose this functionality for
- * existing bean instances.
- *
- * <p>This subinterface of BeanFactory is not meant to be used in normal
- * application code: stick to {@link org.springframework.beans.factory.BeanFactory}
- * or {@link org.springframework.beans.factory.ListableBeanFactory} for
- * typical use cases.
- *
- * <p>Integration code for other frameworks can leverage this interface to
- * wire and populate existing bean instances that Spring does not control
- * the lifecycle of. This is particularly useful for WebWork Actions and
- * Tapestry Page objects, for example.
- *
- * <p>Note that this interface is not implemented by
- * {@link org.springframework.context.ApplicationContext} facades,
- * as it is hardly ever used by application code. That said, it is available
- * from an application context too, accessible through ApplicationContext's
- * {@link org.springframework.context.ApplicationContext#getAutowireCapableBeanFactory()}
- * method.
- *
- * <p>You may also implement the {@link org.springframework.beans.factory.BeanFactoryAware}
- * interface, which exposes the internal BeanFactory even when running in an
- * ApplicationContext, to get access to an AutowireCapableBeanFactory:
- * simply cast the passed-in BeanFactory to AutowireCapableBeanFactory.
- *
- * @author Juergen Hoeller
- * @since 04.12.2003
- * @see org.springframework.beans.factory.BeanFactoryAware
- * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory
- * @see org.springframework.context.ApplicationContext#getAutowireCapableBeanFactory()
+ * 有自动注入能力的bean factory
  */
 public interface AutowireCapableBeanFactory extends BeanFactory {
 
-	/**
-	 * Constant that indicates no externally defined autowiring. Note that
-	 * BeanFactoryAware etc and annotation-driven injection will still be applied.
-	 * @see #createBean
-	 * @see #autowire
-	 * @see #autowireBeanProperties
-	 */
+
 	int AUTOWIRE_NO = 0;
 
-	/**
-	 * Constant that indicates autowiring bean properties by name
-	 * (applying to all bean property setters).
-	 * @see #createBean
-	 * @see #autowire
-	 * @see #autowireBeanProperties
-	 */
+
 	int AUTOWIRE_BY_NAME = 1;
 
-	/**
-	 * Constant that indicates autowiring bean properties by type
-	 * (applying to all bean property setters).
-	 * @see #createBean
-	 * @see #autowire
-	 * @see #autowireBeanProperties
-	 */
+
 	int AUTOWIRE_BY_TYPE = 2;
 
-	/**
-	 * Constant that indicates autowiring the greediest constructor that
-	 * can be satisfied (involves resolving the appropriate constructor).
-	 * @see #createBean
-	 * @see #autowire
-	 */
+
 	int AUTOWIRE_CONSTRUCTOR = 3;
 
-	/**
-	 * Constant that indicates determining an appropriate autowire strategy
-	 * through introspection of the bean class.
-	 * @see #createBean
-	 * @see #autowire
-	 * @deprecated as of Spring 3.0: If you are using mixed autowiring strategies,
-	 * prefer annotation-based autowiring for clearer demarcation of autowiring needs.
-	 */
+
 	@Deprecated
 	int AUTOWIRE_AUTODETECT = 4;
 
-	/**
-	 * Suffix for the "original instance" convention when initializing an existing
-	 * bean instance: to be appended to the fully-qualified bean class name,
-	 * e.g. "com.mypackage.MyClass.ORIGINAL", in order to enforce the given instance
-	 * to be returned, i.e. no proxies etc.
-	 * @since 5.1
-	 * @see #initializeBean(Object, String)
-	 * @see #applyBeanPostProcessorsBeforeInitialization(Object, String)
-	 * @see #applyBeanPostProcessorsAfterInitialization(Object, String)
-	 */
 	String ORIGINAL_INSTANCE_SUFFIX = ".ORIGINAL";
 
 
-	//-------------------------------------------------------------------------
-	// Typical methods for creating and populating external bean instances
-	//-------------------------------------------------------------------------
-
 	/**
-	 * Fully create a new bean instance of the given class.
-	 * <p>Performs full initialization of the bean, including all applicable
-	 * {@link BeanPostProcessor BeanPostProcessors}.
-	 * <p>Note: This is intended for creating a fresh instance, populating annotated
-	 * fields and methods as well as applying all standard bean initialization callbacks.
-	 * It does <i>not</i> imply traditional by-name or by-type autowiring of properties;
-	 * use {@link #createBean(Class, int, boolean)} for those purposes.
-	 * @param beanClass the class of the bean to create
-	 * @return the new bean instance
-	 * @throws BeansException if instantiation or wiring failed
+	 * 给定class 创建一个bean
+	 * @param beanClass
+	 * @param <T>
+	 * @return
+	 * @throws BeansException
 	 */
 	<T> T createBean(Class<T> beanClass) throws BeansException;
 
-	/**
-	 * Populate the given bean instance through applying after-instantiation callbacks
-	 * and bean property post-processing (e.g. for annotation-driven injection).
-	 * <p>Note: This is essentially intended for (re-)populating annotated fields and
-	 * methods, either for new instances or for deserialized instances. It does
-	 * <i>not</i> imply traditional by-name or by-type autowiring of properties;
-	 * use {@link #autowireBeanProperties} for those purposes.
-	 * @param existingBean the existing bean instance
-	 * @throws BeansException if wiring failed
-	 */
+
 	void autowireBean(Object existingBean) throws BeansException;
 
-	/**
-	 * Configure the given raw bean: autowiring bean properties, applying
-	 * bean property values, applying factory callbacks such as {@code setBeanName}
-	 * and {@code setBeanFactory}, and also applying all bean post processors
-	 * (including ones which might wrap the given raw bean).
-	 * <p>This is effectively a superset of what {@link #initializeBean} provides,
-	 * fully applying the configuration specified by the corresponding bean definition.
-	 * <b>Note: This method requires a bean definition for the given name!</b>
-	 * @param existingBean the existing bean instance
-	 * @param beanName the name of the bean, to be passed to it if necessary
-	 * (a bean definition of that name has to be available)
-	 * @return the bean instance to use, either the original or a wrapped one
-	 * @throws org.springframework.beans.factory.NoSuchBeanDefinitionException
-	 * if there is no bean definition with the given name
-	 * @throws BeansException if the initialization failed
-	 * @see #initializeBean
-	 */
+
 	Object configureBean(Object existingBean, String beanName) throws BeansException;
 
 
-	//-------------------------------------------------------------------------
-	// Specialized methods for fine-grained control over the bean lifecycle
-	//-------------------------------------------------------------------------
 
-	/**
-	 * Fully create a new bean instance of the given class with the specified
-	 * autowire strategy. All constants defined in this interface are supported here.
-	 * <p>Performs full initialization of the bean, including all applicable
-	 * {@link BeanPostProcessor BeanPostProcessors}. This is effectively a superset
-	 * of what {@link #autowire} provides, adding {@link #initializeBean} behavior.
-	 * @param beanClass the class of the bean to create
-	 * @param autowireMode by name or type, using the constants in this interface
-	 * @param dependencyCheck whether to perform a dependency check for objects
-	 * (not applicable to autowiring a constructor, thus ignored there)
-	 * @return the new bean instance
-	 * @throws BeansException if instantiation or wiring failed
-	 * @see #AUTOWIRE_NO
-	 * @see #AUTOWIRE_BY_NAME
-	 * @see #AUTOWIRE_BY_TYPE
-	 * @see #AUTOWIRE_CONSTRUCTOR
-	 */
 	Object createBean(Class<?> beanClass, int autowireMode, boolean dependencyCheck) throws BeansException;
 
-	/**
-	 * Instantiate a new bean instance of the given class with the specified autowire
-	 * strategy. All constants defined in this interface are supported here.
-	 * Can also be invoked with {@code AUTOWIRE_NO} in order to just apply
-	 * before-instantiation callbacks (e.g. for annotation-driven injection).
-	 * <p>Does <i>not</i> apply standard {@link BeanPostProcessor BeanPostProcessors}
-	 * callbacks or perform any further initialization of the bean. This interface
-	 * offers distinct, fine-grained operations for those purposes, for example
-	 * {@link #initializeBean}. However, {@link InstantiationAwareBeanPostProcessor}
-	 * callbacks are applied, if applicable to the construction of the instance.
-	 * @param beanClass the class of the bean to instantiate
-	 * @param autowireMode by name or type, using the constants in this interface
-	 * @param dependencyCheck whether to perform a dependency check for object
-	 * references in the bean instance (not applicable to autowiring a constructor,
-	 * thus ignored there)
-	 * @return the new bean instance
-	 * @throws BeansException if instantiation or wiring failed
-	 * @see #AUTOWIRE_NO
-	 * @see #AUTOWIRE_BY_NAME
-	 * @see #AUTOWIRE_BY_TYPE
-	 * @see #AUTOWIRE_CONSTRUCTOR
-	 * @see #AUTOWIRE_AUTODETECT
-	 * @see #initializeBean
-	 * @see #applyBeanPostProcessorsBeforeInitialization
-	 * @see #applyBeanPostProcessorsAfterInitialization
-	 */
+
 	Object autowire(Class<?> beanClass, int autowireMode, boolean dependencyCheck) throws BeansException;
 
 	/**

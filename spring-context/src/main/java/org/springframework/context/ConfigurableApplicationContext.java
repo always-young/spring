@@ -96,10 +96,7 @@ public interface ConfigurableApplicationContext extends ApplicationContext, Life
 	String SHUTDOWN_HOOK_THREAD_NAME = "SpringContextShutdownHook";
 
 
-	/**
-	 * Set the unique id of this application context.
-	 * @since 3.0
-	 */
+
 	void setId(String id);
 
 	/**
@@ -166,15 +163,9 @@ public interface ConfigurableApplicationContext extends ApplicationContext, Life
 	void addProtocolResolver(ProtocolResolver resolver);
 
 	/**
-	 * Load or refresh the persistent representation of the configuration, which
-	 * might be from Java-based configuration, an XML file, a properties file, a
-	 * relational database schema, or some other format.
-	 * <p>As this is a startup method, it should destroy already created singletons
-	 * if it fails, to avoid dangling resources. In other words, after invocation
-	 * of this method, either all or no singletons at all should be instantiated.
-	 * @throws BeansException if the bean factory could not be initialized
-	 * @throws IllegalStateException if already initialized and multiple refresh
-	 * attempts are not supported
+	 * 刷新容器
+	 * @throws BeansException
+	 * @throws IllegalStateException
 	 */
 	void refresh() throws BeansException, IllegalStateException;
 
@@ -211,25 +202,7 @@ public interface ConfigurableApplicationContext extends ApplicationContext, Life
 	 */
 	boolean isActive();
 
-	/**
-	 * Return the internal bean factory of this application context.
-	 * Can be used to access specific functionality of the underlying factory.
-	 * <p>Note: Do not use this to post-process the bean factory; singletons
-	 * will already have been instantiated before. Use a BeanFactoryPostProcessor
-	 * to intercept the BeanFactory setup process before beans get touched.
-	 * <p>Generally, this internal factory will only be accessible while the context
-	 * is active, that is, in-between {@link #refresh()} and {@link #close()}.
-	 * The {@link #isActive()} flag can be used to check whether the context
-	 * is in an appropriate state.
-	 * @return the underlying bean factory
-	 * @throws IllegalStateException if the context does not hold an internal
-	 * bean factory (usually if {@link #refresh()} hasn't been called yet or
-	 * if {@link #close()} has already been called)
-	 * @see #isActive()
-	 * @see #refresh()
-	 * @see #close()
-	 * @see #addBeanFactoryPostProcessor
-	 */
+
 	ConfigurableListableBeanFactory getBeanFactory() throws IllegalStateException;
 
 }

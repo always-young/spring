@@ -138,6 +138,7 @@ class ResolvableTypeTests {
 	void forRawClassAssignableFromTypeVariable() throws Exception {
 		ResolvableType typeVariable = ResolvableType.forClass(ExtendsList.class).as(List.class).getGeneric();
 		ResolvableType raw = ResolvableType.forRawClass(CharSequence.class);
+		raw.getSuperType()
 		assertThat(raw.resolve()).isEqualTo(CharSequence.class);
 		assertThat(typeVariable.resolve()).isEqualTo(CharSequence.class);
 		assertThat(raw.resolve().isAssignableFrom(typeVariable.resolve())).isTrue();

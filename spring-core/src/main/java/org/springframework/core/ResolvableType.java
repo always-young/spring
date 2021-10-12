@@ -42,44 +42,6 @@ import org.springframework.util.ConcurrentReferenceHashMap;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-/**
- * Encapsulates a Java {@link java.lang.reflect.Type}, providing access to
- * {@link #getSuperType() supertypes}, {@link #getInterfaces() interfaces}, and
- * {@link #getGeneric(int...) generic parameters} along with the ability to ultimately
- * {@link #resolve() resolve} to a {@link java.lang.Class}.
- *
- * <p>{@code ResolvableTypes} may be obtained from {@link #forField(Field) fields},
- * {@link #forMethodParameter(Method, int) method parameters},
- * {@link #forMethodReturnType(Method) method returns} or
- * {@link #forClass(Class) classes}. Most methods on this class will themselves return
- * {@link ResolvableType ResolvableTypes}, allowing easy navigation. For example:
- * <pre class="code">
- * private HashMap&lt;Integer, List&lt;String&gt;&gt; myMap;
- *
- * public void example() {
- *     ResolvableType t = ResolvableType.forField(getClass().getDeclaredField("myMap"));
- *     t.getSuperType(); // AbstractMap&lt;Integer, List&lt;String&gt;&gt;
- *     t.asMap(); // Map&lt;Integer, List&lt;String&gt;&gt;
- *     t.getGeneric(0).resolve(); // Integer
- *     t.getGeneric(1).resolve(); // List
- *     t.getGeneric(1); // List&lt;String&gt;
- *     t.resolveGeneric(1, 0); // String
- * }
- * </pre>
- *
- * @author Phillip Webb
- * @author Juergen Hoeller
- * @author Stephane Nicoll
- * @since 4.0
- * @see #forField(Field)
- * @see #forMethodParameter(Method, int)
- * @see #forMethodReturnType(Method)
- * @see #forConstructorParameter(Constructor, int)
- * @see #forClass(Class)
- * @see #forType(Type)
- * @see #forInstance(Object)
- * @see ResolvableTypeProvider
- */
 @SuppressWarnings("serial")
 public class ResolvableType implements Serializable {
 
@@ -91,12 +53,13 @@ public class ResolvableType implements Serializable {
 
 	private static final ResolvableType[] EMPTY_TYPES_ARRAY = new ResolvableType[0];
 
+	//弱引用的HashMap
 	private static final ConcurrentReferenceHashMap<ResolvableType, ResolvableType> cache =
 			new ConcurrentReferenceHashMap<>(256);
 
 
 	/**
-	 * The underlying Java type being managed.
+	 * java type
 	 */
 	private final Type type;
 
@@ -1010,18 +973,7 @@ public class ResolvableType implements Serializable {
 		return new ResolvableType(clazz);
 	}
 
-	/**
-	 * Return a {@link ResolvableType} for the specified {@link Class},
-	 * doing assignability checks against the raw class only (analogous to
-	 * {@link Class#isAssignableFrom}, which this serves as a wrapper for.
-	 * For example: {@code ResolvableType.forRawClass(List.class)}.
-	 * @param clazz the class to introspect ({@code null} is semantically
-	 * equivalent to {@code Object.class} for typical use cases here)
-	 * @return a {@link ResolvableType} for the specified class
-	 * @since 4.2
-	 * @see #forClass(Class)
-	 * @see #getRawClass()
-	 */
+
 	public static ResolvableType forRawClass(@Nullable Class<?> clazz) {
 		return new ResolvableType(clazz) {
 			@Override
