@@ -27,23 +27,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.PatternMatchUtils;
 import org.springframework.util.StringUtils;
 
-/**
- * Auto proxy creator that identifies beans to proxy via a list of names.
- * Checks for direct, "xxx*", and "*xxx" matches.
- *
- * <p>For configuration details, see the javadoc of the parent class
- * AbstractAutoProxyCreator. Typically, you will specify a list of
- * interceptor names to apply to all identified beans, via the
- * "interceptorNames" property.
- *
- * @author Juergen Hoeller
- * @since 10.10.2003
- * @see #setBeanNames
- * @see #isMatch
- * @see #setInterceptorNames
- * @see AbstractAutoProxyCreator
- */
-@SuppressWarnings("serial")
+
 public class BeanNameAutoProxyCreator extends AbstractAutoProxyCreator {
 
 	@Nullable

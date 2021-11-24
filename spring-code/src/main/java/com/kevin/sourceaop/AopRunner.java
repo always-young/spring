@@ -11,7 +11,8 @@ public class AopRunner {
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AopConfig.class);
-        final MessageService serviceProxy = applicationContext.getBean("messageService", MessageService.class);
+        //final MessageService serviceProxy = applicationContext.getBean("messageService", MessageService.class);
+        MessageService serviceProxy = applicationContext.getBean(MessageService.class);
         serviceProxy.sendMessage("hello aop");
     }
 }

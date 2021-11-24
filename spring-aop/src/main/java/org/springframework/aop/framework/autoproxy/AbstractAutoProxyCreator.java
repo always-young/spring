@@ -51,46 +51,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-/**
- * {@link org.springframework.beans.factory.config.BeanPostProcessor} implementation
- * that wraps each eligible bean with an AOP proxy, delegating to specified interceptors
- * before invoking the bean itself.
- *
- * <p>This class distinguishes between "common" interceptors: shared for all proxies it
- * creates, and "specific" interceptors: unique per bean instance. There need not be any
- * common interceptors. If there are, they are set using the interceptorNames property.
- * As with {@link org.springframework.aop.framework.ProxyFactoryBean}, interceptors names
- * in the current factory are used rather than bean references to allow correct handling
- * of prototype advisors and interceptors: for example, to support stateful mixins.
- * Any advice type is supported for {@link #setInterceptorNames "interceptorNames"} entries.
- *
- * <p>Such auto-proxying is particularly useful if there's a large number of beans that
- * need to be wrapped with similar proxies, i.e. delegating to the same interceptors.
- * Instead of x repetitive proxy definitions for x target beans, you can register
- * one single such post processor with the bean factory to achieve the same effect.
- *
- * <p>Subclasses can apply any strategy to decide if a bean is to be proxied, e.g. by type,
- * by name, by definition details, etc. They can also return additional interceptors that
- * should just be applied to the specific bean instance. A simple concrete implementation is
- * {@link BeanNameAutoProxyCreator}, identifying the beans to be proxied via given names.
- *
- * <p>Any number of {@link TargetSourceCreator} implementations can be used to create
- * a custom target source: for example, to pool prototype objects. Auto-proxying will
- * occur even if there is no advice, as long as a TargetSourceCreator specifies a custom
- * {@link org.springframework.aop.TargetSource}. If there are no TargetSourceCreators set,
- * or if none matches, a {@link org.springframework.aop.target.SingletonTargetSource}
- * will be used by default to wrap the target bean instance.
- *
- * @author Juergen Hoeller
- * @author Rod Johnson
- * @author Rob Harrop
- * @since 13.10.2003
- * @see #setInterceptorNames
- * @see #getAdvicesAndAdvisorsForBean
- * @see BeanNameAutoProxyCreator
- * @see DefaultAdvisorAutoProxyCreator
- */
-@SuppressWarnings("serial")
 public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		implements SmartInstantiationAwareBeanPostProcessor, BeanFactoryAware {
 

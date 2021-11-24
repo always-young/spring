@@ -26,18 +26,7 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 
-/**
- * Default implementation of the {@link AdvisorAdapterRegistry} interface.
- * Supports {@link org.aopalliance.intercept.MethodInterceptor},
- * {@link org.springframework.aop.MethodBeforeAdvice},
- * {@link org.springframework.aop.AfterReturningAdvice},
- * {@link org.springframework.aop.ThrowsAdvice}.
- *
- * @author Rod Johnson
- * @author Rob Harrop
- * @author Juergen Hoeller
- */
-@SuppressWarnings("serial")
+
 public class DefaultAdvisorAdapterRegistry implements AdvisorAdapterRegistry, Serializable {
 
 	private final List<AdvisorAdapter> adapters = new ArrayList<>(3);

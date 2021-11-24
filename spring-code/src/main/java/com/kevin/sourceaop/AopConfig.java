@@ -23,12 +23,17 @@ public class AopConfig {
         return new LogInterceptor();
     }
     
+//    @Bean
+//    public NameMatchMethodPointcutAdvisor nameMatchMethodPointcutAdvisor(){
+//    	NameMatchMethodPointcutAdvisor nameMatchMethodPointcutAdvisor =  new NameMatchMethodPointcutAdvisor();
+//        nameMatchMethodPointcutAdvisor.setMappedName("sendMessage");
+//        nameMatchMethodPointcutAdvisor.setAdvice(logInterceptor());
+//        return nameMatchMethodPointcutAdvisor;
+//    }
+
     @Bean
-    public NameMatchMethodPointcutAdvisor nameMatchMethodPointcutAdvisor(){
-    	NameMatchMethodPointcutAdvisor nameMatchMethodPointcutAdvisor =  new NameMatchMethodPointcutAdvisor();
-        nameMatchMethodPointcutAdvisor.setMappedName("sendMessage");
-        nameMatchMethodPointcutAdvisor.setAdvice(logInterceptor());
-        return nameMatchMethodPointcutAdvisor;
+    public AspectConfig aspectConfig(){
+        return new AspectConfig();
     }
     
     @Bean
@@ -36,7 +41,7 @@ public class AopConfig {
         return new ConsoleMessageServiceImpl();
     }
 
-    // 单个
+    //单个 不会替换原来的
 //    @Bean
 //    public ProxyFactoryBean serviceProxy(MessageService messageService) {
 //        val proxyFactoryBean = new ProxyFactoryBean();

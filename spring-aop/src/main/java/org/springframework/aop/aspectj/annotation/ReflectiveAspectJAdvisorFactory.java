@@ -127,15 +127,8 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 				new LazySingletonAspectInstanceFactoryDecorator(aspectInstanceFactory);
 
 		List<Advisor> advisors = new ArrayList<>();
+		//拿到所有没加PointCut注解的方法
 		for (Method method : getAdvisorMethods(aspectClass)) {
-			// Prior to Spring Framework 5.2.7, advisors.size() was supplied as the declarationOrderInAspect
-			// to getAdvisor(...) to represent the "current position" in the declared methods list.
-			// However, since Java 7 the "current position" is not valid since the JDK no longer
-			// returns declared methods in the order in which they are declared in the source code.
-			// Thus, we now hard code the declarationOrderInAspect to 0 for all advice methods
-			// discovered via reflection in order to support reliable advice ordering across JVM launches.
-			// Specifically, a value of 0 aligns with the default value used in
-			// AspectJPrecedenceComparator.getAspectDeclarationOrder(Advisor).
 			Advisor advisor = getAdvisor(method, lazySingletonAspectInstanceFactory, 0, aspectName);
 			if (advisor != null) {
 				advisors.add(advisor);
@@ -204,6 +197,7 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 
 		validate(aspectInstanceFactory.getAspectMetadata().getAspectClass());
 
+		//拿到pointCut
 		AspectJExpressionPointcut expressionPointcut = getPointcut(
 				candidateAdviceMethod, aspectInstanceFactory.getAspectMetadata().getAspectClass());
 		if (expressionPointcut == null) {
@@ -237,9 +231,11 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 	public Advice getAdvice(Method candidateAdviceMethod, AspectJExpressionPointcut expressionPointcut,
 			MetadataAwareAspectInstanceFactory aspectInstanceFactory, int declarationOrder, String aspectName) {
 
+		//拿到@Aspect的Class
 		Class<?> candidateAspectClass = aspectInstanceFactory.getAspectMetadata().getAspectClass();
 		validate(candidateAspectClass);
 
+		//拿到方法上的注解
 		AspectJAnnotation<?> aspectJAnnotation =
 				AbstractAspectJAdvisorFactory.findAspectJAnnotationOnMethod(candidateAdviceMethod);
 		if (aspectJAnnotation == null) {

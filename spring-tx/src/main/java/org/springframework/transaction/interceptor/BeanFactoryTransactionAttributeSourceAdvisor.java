@@ -22,16 +22,8 @@ import org.springframework.aop.support.AbstractBeanFactoryPointcutAdvisor;
 import org.springframework.lang.Nullable;
 
 /**
- * Advisor driven by a {@link TransactionAttributeSource}, used to include
- * a transaction advice bean for methods that are transactional.
- *
- * @author Juergen Hoeller
- * @since 2.5.5
- * @see #setAdviceBeanName
- * @see TransactionInterceptor
- * @see TransactionAttributeSourceAdvisor
+ * 事务核心advisor
  */
-@SuppressWarnings("serial")
 public class BeanFactoryTransactionAttributeSourceAdvisor extends AbstractBeanFactoryPointcutAdvisor {
 
 	@Nullable

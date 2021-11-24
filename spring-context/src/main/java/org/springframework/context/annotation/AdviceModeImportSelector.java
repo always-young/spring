@@ -50,18 +50,7 @@ public abstract class AdviceModeImportSelector<A extends Annotation> implements 
 		return DEFAULT_ADVICE_MODE_ATTRIBUTE_NAME;
 	}
 
-	/**
-	 * This implementation resolves the type of annotation from generic metadata and
-	 * validates that (a) the annotation is in fact present on the importing
-	 * {@code @Configuration} class and (b) that the given annotation has an
-	 * {@linkplain #getAdviceModeAttributeName() advice mode attribute} of type
-	 * {@link AdviceMode}.
-	 * <p>The {@link #selectImports(AdviceMode)} method is then invoked, allowing the
-	 * concrete implementation to choose imports in a safe and convenient fashion.
-	 * @throws IllegalArgumentException if expected annotation {@code A} is not present
-	 * on the importing {@code @Configuration} class or if {@link #selectImports(AdviceMode)}
-	 * returns {@code null}
-	 */
+
 	@Override
 	public final String[] selectImports(AnnotationMetadata importingClassMetadata) {
 		Class<?> annType = GenericTypeResolver.resolveTypeArgument(getClass(), AdviceModeImportSelector.class);

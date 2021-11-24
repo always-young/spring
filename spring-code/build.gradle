@@ -17,8 +17,9 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile(project(":spring-context"))
+    compile(project(":spring-aop"))
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
-    runtimeOnly group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.7'
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.7'
 
     //spring 开发web
     //compile(project(":spring-web"))

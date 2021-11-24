@@ -63,25 +63,7 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-/**
- * Spring {@link org.springframework.aop.Pointcut} implementation
- * that uses the AspectJ weaver to evaluate a pointcut expression.
- *
- * <p>The pointcut expression value is an AspectJ expression. This can
- * reference other pointcuts and use composition and other operations.
- *
- * <p>Naturally, as this is to be processed by Spring AOP's proxy-based model,
- * only method execution pointcuts are supported.
- *
- * @author Rob Harrop
- * @author Adrian Colyer
- * @author Rod Johnson
- * @author Juergen Hoeller
- * @author Ramnivas Laddad
- * @author Dave Syer
- * @since 2.0
- */
-@SuppressWarnings("serial")
+
 public class AspectJExpressionPointcut extends AbstractExpressionPointcut
 		implements ClassFilter, IntroductionAwareMethodMatcher, BeanFactoryAware {
 

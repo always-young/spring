@@ -62,15 +62,7 @@ public class BeanFactoryAspectInstanceFactory implements MetadataAwareAspectInst
 		this(beanFactory, name, null);
 	}
 
-	/**
-	 * Create a BeanFactoryAspectInstanceFactory, providing a type that AspectJ should
-	 * introspect to create AJType metadata. Use if the BeanFactory may consider the type
-	 * to be a subclass (as when using CGLIB), and the information should relate to a superclass.
-	 * @param beanFactory the BeanFactory to obtain instance(s) from
-	 * @param name the name of the bean
-	 * @param type the type that should be introspected by AspectJ
-	 * ({@code null} indicates resolution through {@link BeanFactory#getType} via the bean name)
-	 */
+
 	public BeanFactoryAspectInstanceFactory(BeanFactory beanFactory, String name, @Nullable Class<?> type) {
 		Assert.notNull(beanFactory, "BeanFactory must not be null");
 		Assert.notNull(name, "Bean name must not be null");

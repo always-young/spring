@@ -53,13 +53,7 @@ import org.springframework.transaction.TransactionManager;
 @SuppressWarnings("serial")
 public class TransactionInterceptor extends TransactionAspectSupport implements MethodInterceptor, Serializable {
 
-	/**
-	 * Create a new TransactionInterceptor.
-	 * <p>Transaction manager and transaction attributes still need to be set.
-	 * @see #setTransactionManager
-	 * @see #setTransactionAttributes(java.util.Properties)
-	 * @see #setTransactionAttributeSource(TransactionAttributeSource)
-	 */
+
 	public TransactionInterceptor() {
 	}
 
