@@ -103,21 +103,11 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 	private final AtomicBoolean refreshed = new AtomicBoolean();
 
 
-	/**
-	 * Create a new GenericApplicationContext.
-	 * @see #registerBeanDefinition
-	 * @see #refresh
-	 */
 	public GenericApplicationContext() {
 		this.beanFactory = new DefaultListableBeanFactory();
 	}
 
-	/**
-	 * Create a new GenericApplicationContext with the given DefaultListableBeanFactory.
-	 * @param beanFactory the DefaultListableBeanFactory instance to use for this context
-	 * @see #registerBeanDefinition
-	 * @see #refresh
-	 */
+
 	public GenericApplicationContext(DefaultListableBeanFactory beanFactory) {
 		Assert.notNull(beanFactory, "BeanFactory must not be null");
 		this.beanFactory = beanFactory;

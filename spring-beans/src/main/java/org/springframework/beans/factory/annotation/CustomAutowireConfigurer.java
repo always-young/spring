@@ -28,25 +28,6 @@ import org.springframework.core.Ordered;
 import org.springframework.lang.Nullable;
 import org.springframework.util.ClassUtils;
 
-/**
- * A {@link org.springframework.beans.factory.config.BeanFactoryPostProcessor}
- * implementation that allows for convenient registration of custom autowire
- * qualifier types.
- *
- * <pre class="code">
- * &lt;bean id="customAutowireConfigurer" class="org.springframework.beans.factory.annotation.CustomAutowireConfigurer"&gt;
- *   &lt;property name="customQualifierTypes"&gt;
- *     &lt;set&gt;
- *       &lt;value&gt;mypackage.MyQualifier&lt;/value&gt;
- *     &lt;/set&gt;
- *   &lt;/property&gt;
- * &lt;/bean&gt;</pre>
- *
- * @author Mark Fisher
- * @author Juergen Hoeller
- * @since 2.5
- * @see org.springframework.beans.factory.annotation.Qualifier
- */
 public class CustomAutowireConfigurer implements BeanFactoryPostProcessor, BeanClassLoaderAware, Ordered {
 
 	private int order = Ordered.LOWEST_PRECEDENCE;  // default: same as non-Ordered

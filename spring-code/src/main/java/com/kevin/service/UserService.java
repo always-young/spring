@@ -2,7 +2,9 @@ package com.kevin.service;
 
 import com.kevin.aop.Log;
 import com.kevin.entity.User;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +15,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
+@Data
 public class UserService {
 
     @Value("${123:123}")
-    private  String logService;
+    private  String log;
+
+    @Autowired
+    private LogService logService;
 
     @Log
     public User getUser() {

@@ -162,14 +162,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 		this.reader.register(componentClasses);
 	}
 
-	/**
-	 * Perform a scan within the specified base packages.
-	 * <p>Note that {@link #refresh()} must be called in order for the context
-	 * to fully process the new classes.
-	 * @param basePackages the packages to scan for component classes
-	 * @see #register(Class...)
-	 * @see #refresh()
-	 */
+
 	@Override
 	public void scan(String... basePackages) {
 		Assert.notEmpty(basePackages, "At least one base package must be specified");

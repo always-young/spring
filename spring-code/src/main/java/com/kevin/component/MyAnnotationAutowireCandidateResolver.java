@@ -21,7 +21,10 @@ public class MyAnnotationAutowireCandidateResolver extends ContextAnnotationAuto
 
     @Override
     public Object getSuggestedValue(@NotNull DependencyDescriptor descriptor) {
-        return "kevin";
+        if(descriptor.getDependencyType().isAssignableFrom(String.class)) {
+            return "kevin";
+        }
+        return super.getSuggestedValue(descriptor);
     }
 
     @Override
