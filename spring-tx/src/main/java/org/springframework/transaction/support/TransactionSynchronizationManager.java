@@ -33,57 +33,27 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
- * Central delegate that manages resources and transaction synchronizations per thread.
- * To be used by resource management code but not by typical application code.
- *
- * <p>Supports one resource per key without overwriting, that is, a resource needs
- * to be removed before a new one can be set for the same key.
- * Supports a list of transaction synchronizations if synchronization is active.
- *
- * <p>Resource management code should check for thread-bound resources, e.g. JDBC
- * Connections or Hibernate Sessions, via {@code getResource}. Such code is
- * normally not supposed to bind resources to threads, as this is the responsibility
- * of transaction managers. A further option is to lazily bind on first use if
- * transaction synchronization is active, for performing transactions that span
- * an arbitrary number of resources.
- *
- * <p>Transaction synchronization must be activated and deactivated by a transaction
- * manager via {@link #initSynchronization()} and {@link #clearSynchronization()}.
- * This is automatically supported by {@link AbstractPlatformTransactionManager},
- * and thus by all standard Spring transaction managers, such as
- * {@link org.springframework.transaction.jta.JtaTransactionManager} and
- * {@link org.springframework.jdbc.datasource.DataSourceTransactionManager}.
- *
- * <p>Resource management code should only register synchronizations when this
- * manager is active, which can be checked via {@link #isSynchronizationActive};
- * it should perform immediate resource cleanup else. If transaction synchronization
- * isn't active, there is either no current transaction, or the transaction manager
- * doesn't support transaction synchronization.
- *
- * <p>Synchronization is for example used to always return the same resources
- * within a JTA transaction, e.g. a JDBC Connection or a Hibernate Session for
- * any given DataSource or SessionFactory, respectively.
- *
- * @author Juergen Hoeller
- * @since 02.06.2003
- * @see #isSynchronizationActive
- * @see #registerSynchronization
- * @see TransactionSynchronization
- * @see AbstractPlatformTransactionManager#setTransactionSynchronization
- * @see org.springframework.transaction.jta.JtaTransactionManager
- * @see org.springframework.jdbc.datasource.DataSourceTransactionManager
- * @see org.springframework.jdbc.datasource.DataSourceUtils#getConnection
+ * 事务同步管理工具类
  */
 public abstract class TransactionSynchronizationManager {
 
 	private static final Log logger = LogFactory.getLog(TransactionSynchronizationManager.class);
 
+	/**
+	 * 资源map
+	 */
 	private static final ThreadLocal<Map<Object, Object>> resources =
 			new NamedThreadLocal<>("Transactional resources");
 
+	/**
+	 * 回调接口set
+	 */
 	private static final ThreadLocal<Set<TransactionSynchronization>> synchronizations =
 			new NamedThreadLocal<>("Transaction synchronizations");
 
+	/**
+	 * 事务名称
+	 */
 	private static final ThreadLocal<String> currentTransactionName =
 			new NamedThreadLocal<>("Current transaction name");
 
@@ -116,10 +86,9 @@ public abstract class TransactionSynchronizationManager {
 	}
 
 	/**
-	 * Check if there is a resource for the given key bound to the current thread.
-	 * @param key the key to check (usually the resource factory)
-	 * @return if there is a value bound to the current thread
-	 * @see ResourceTransactionManager#getResourceFactory()
+	 * 判断是否存在资源
+	 * @param key
+	 * @return
 	 */
 	public static boolean hasResource(Object key) {
 		Object actualKey = TransactionSynchronizationUtils.unwrapResourceIfNecessary(key);

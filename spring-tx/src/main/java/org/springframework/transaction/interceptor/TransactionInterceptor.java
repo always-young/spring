@@ -31,26 +31,10 @@ import org.springframework.lang.Nullable;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionManager;
 
+
 /**
- * AOP Alliance MethodInterceptor for declarative transaction
- * management using the common Spring transaction infrastructure
- * ({@link org.springframework.transaction.PlatformTransactionManager}/
- * {@link org.springframework.transaction.ReactiveTransactionManager}).
- *
- * <p>Derives from the {@link TransactionAspectSupport} class which
- * contains the integration with Spring's underlying transaction API.
- * TransactionInterceptor simply calls the relevant superclass methods
- * such as {@link #invokeWithinTransaction} in the correct order.
- *
- * <p>TransactionInterceptors are thread-safe.
- *
- * @author Rod Johnson
- * @author Juergen Hoeller
- * @see TransactionProxyFactoryBean
- * @see org.springframework.aop.framework.ProxyFactoryBean
- * @see org.springframework.aop.framework.ProxyFactory
+ * spring事务核心
  */
-@SuppressWarnings("serial")
 public class TransactionInterceptor extends TransactionAspectSupport implements MethodInterceptor, Serializable {
 
 
@@ -103,9 +87,8 @@ public class TransactionInterceptor extends TransactionAspectSupport implements 
 	@Override
 	@Nullable
 	public Object invoke(MethodInvocation invocation) throws Throwable {
-		// Work out the target class: may be {@code null}.
-		// The TransactionAttributeSource should be passed the target class
-		// as well as the method, which may be from an interface.
+
+		//获取到代理类
 		Class<?> targetClass = (invocation.getThis() != null ? AopUtils.getTargetClass(invocation.getThis()) : null);
 
 		// Adapt to TransactionAspectSupport's invokeWithinTransaction...
