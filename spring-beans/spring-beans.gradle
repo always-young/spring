@@ -10,10 +10,6 @@ dependencies {
 	optional("org.codehaus.groovy:groovy-xml")
 	optional("org.jetbrains.kotlin:kotlin-reflect")
 	optional("org.jetbrains.kotlin:kotlin-stdlib")
-	testImplementation(testFixtures(project(":spring-core")))
-	testImplementation("javax.annotation:javax.annotation-api")
-	testFixturesApi("org.junit.jupiter:junit-jupiter-api")
-	testFixturesImplementation("org.assertj:assertj-core")
 }
 
 // This module does joint compilation for Java and Groovy code with the compileGroovy task.
@@ -22,9 +18,6 @@ sourceSets {
 	main.java.srcDirs = []
 }
 
-compileGroovy {
-	options.compilerArgs += "-Werror"
-}
 
 // This module also builds Kotlin code and the compileKotlin task naturally depends on
 // compileJava. We need to redefine dependencies to break task cycles.

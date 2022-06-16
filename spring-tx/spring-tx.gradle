@@ -18,11 +18,4 @@ dependencies {
 	optional("org.jetbrains.kotlin:kotlin-stdlib")
 	optional("org.jetbrains.kotlinx:kotlinx-coroutines-core")
 	optional("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-	testImplementation(testFixtures(project(":spring-beans")))
-	testImplementation(testFixtures(project(":spring-context")))
-	testImplementation(testFixtures(project(":spring-core")))
-	testImplementation("org.aspectj:aspectjweaver")
-	testImplementation("org.codehaus.groovy:groovy")
-	testImplementation("org.eclipse.persistence:javax.persistence")
-	testImplementation("io.projectreactor:reactor-test")
 }

@@ -13,28 +13,8 @@ dependencies {
 	jmh 'net.sf.jopt-simple:jopt-simple'
 }
 
-jmh {
-	duplicateClassesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
 tasks.findByName("processJmhResources").configure {
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
-jmhJar {
-	// Uncomment the following for Shadow's Transformer support.
-	// mergeServiceFiles()
-	// append('META-INF/spring.handlers')
-	// append('META-INF/spring.schemas')
-	// append('META-INF/spring.tooling')
-	exclude 'LICENSE'
-	exclude 'THIRD-PARTY'
-	exclude 'META-INF/license.txt'
-	exclude 'META-INF/notice.txt'
-	exclude 'META-INF/DEPENDENCIES'
-	exclude 'META-INF/LICENSE*'
-	exclude 'META-INF/NOTICE'
-	exclude 'META-INF/THIRD-PARTY'
 }
 
 jar {
@@ -58,23 +38,6 @@ normalization {
 	}
 }
 
-javadoc {
-	description = "Generates project-level javadoc for use in -javadoc jar"
-
-	options.encoding = "UTF-8"
-	options.memberLevel = JavadocMemberLevel.PROTECTED
-	options.author = true
-	options.header = project.name
-	options.use = true
-	options.links(project.ext.javadocLinks)
-	options.addStringOption("Xdoclint:none", "-quiet")
-
-	// Suppress warnings due to cross-module @see and @link references.
-	// Note that global 'api' task does display all warnings.
-	logging.captureStandardError LogLevel.INFO
-	logging.captureStandardOutput LogLevel.INFO  // suppress "## warnings" message
-}
-
 task sourcesJar(type: Jar, dependsOn: classes) {
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 	archiveClassifier.set("sources")
@@ -82,21 +45,12 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 	// Don't include or exclude anything explicitly by default. See SPR-12085.
 }
 
-task javadocJar(type: Jar) {
-	archiveClassifier.set("javadoc")
-	from javadoc
-}
-
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			from components.java
-			artifact sourcesJar
-			artifact javadocJar
+			//from components.java
+//			artifact sourcesJar
+//			artifact javadocJar
 		}
 	}
 }
-
-// Disable publication of test fixture artifacts.
-components.java.withVariantsFromConfiguration(configurations.testFixturesApiElements) { skip() }
-components.java.withVariantsFromConfiguration(configurations.testFixturesRuntimeElements) { skip() }

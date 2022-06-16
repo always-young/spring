@@ -312,8 +312,6 @@ configure([rootProject] + javaProjects) { project ->
 	group = "org.springframework"
 
 	apply plugin: "java"
-	apply plugin: "java-test-fixtures"
-	apply plugin: "checkstyle"
 	apply plugin: 'org.springframework.build.compile'
 	apply from: "${rootDir}/gradle/toolchains.gradle"
 	apply from: "${rootDir}/gradle/ide.gradle"
@@ -330,45 +328,10 @@ configure([rootProject] + javaProjects) { project ->
 				allWarningsAsErrors = true
 			}
 		}
-		compileTestKotlin {
-			kotlinOptions {
-				freeCompilerArgs = ["-Xjsr305=strict"]
-			}
-		}
-	}
-
-	test {
-		useJUnitPlatform()
-		include(["**/*Tests.class", "**/*Test.class"])
-		systemProperty("java.awt.headless", "true")
-		systemProperty("testGroups", project.properties.get("testGroups"))
-		systemProperty("io.netty.leakDetection.level", "paranoid")
-	}
-
-	checkstyle {
-		toolVersion = "9.2"
-		configDirectory.set(rootProject.file("src/checkstyle"))
 	}
 
 	dependencies {
-		testImplementation("org.junit.jupiter:junit-jupiter-api")
-		testImplementation("org.junit.jupiter:junit-jupiter-params")
-		testImplementation("org.junit.platform:junit-platform-suite-api")
-		testImplementation("org.mockito:mockito-core")
-		testImplementation("org.mockito:mockito-junit-jupiter")
-		testImplementation("io.mockk:mockk")
-		testImplementation("org.assertj:assertj-core")
-		// Pull in the latest JUnit 5 Launcher API to ensure proper support in IDEs.
-		testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-		testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-		testRuntimeOnly("org.junit.platform:junit-platform-suite-engine")
-		testRuntimeOnly("org.apache.logging.log4j:log4j-core")
-		testRuntimeOnly("org.apache.logging.log4j:log4j-jul")
-		testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j-impl")
-		// JSR-305 only used for non-required meta-annotations
 		compileOnly("com.google.code.findbugs:jsr305")
-		testCompileOnly("com.google.code.findbugs:jsr305")
-		checkstyle("io.spring.javaformat:spring-javaformat-checkstyle:0.0.29")
 	}
 
 	ext.javadocLinks = [
@@ -412,27 +375,12 @@ configure(rootProject) {
 	apply from: "${rootDir}/gradle/publications.gradle"
 	apply from: "${rootDir}/gradle/docs.gradle"
 
-	nohttp {
-		source.exclude "**/test-output/**"
-		allowlistFile = project.file("src/nohttp/allowlist.lines")
-		def rootPath = file(rootDir).toPath()
-		def projectDirs = allprojects.collect { it.projectDir } + "${rootDir}/buildSrc"
-		projectDirs.forEach { dir ->
-			[ 'bin', 'build', 'out', '.settings' ]
-				.collect { rootPath.relativize(new File(dir, it).toPath()) }
-				.forEach { source.exclude "$it/**" }
-			[ '.classpath', '.project' ]
-				.collect { rootPath.relativize(new File(dir, it).toPath()) }
-				.forEach { source.exclude "$it" }
-		}
-	}
-
 	publishing {
 		publications {
 			mavenJava(MavenPublication) {
-				artifact docsZip
-				artifact schemaZip
-				artifact distZip
+//				artifact docsZip
+//				artifact schemaZip
+//				artifact distZip
 			}
 		}
 	}

@@ -11,11 +11,4 @@ dependencies {
 	optional("org.eclipse.persistence:org.eclipse.persistence.jpa")
 	optional("org.hibernate:hibernate-core")
 	optional("javax.servlet:javax.servlet-api")
-	testImplementation(testFixtures(project(":spring-beans")))
-	testImplementation(testFixtures(project(":spring-context")))
-	testImplementation(testFixtures(project(":spring-core")))
-	testImplementation(testFixtures(project(":spring-web")))
-	testImplementation("org.aspectj:aspectjweaver")
-	testImplementation("org.hsqldb:hsqldb")
-	testRuntimeOnly("javax.xml.bind:jaxb-api")
 }

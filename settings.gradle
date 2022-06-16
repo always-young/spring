@@ -24,7 +24,6 @@ include "spring-orm"
 include "spring-oxm"
 include "spring-tx"
 include "spring-web"
-include "spring-webflux"
 include "spring-webmvc"
 include "framework-bom"
 include 'spring-kevin'
