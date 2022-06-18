@@ -1,0 +1,16 @@
+group 'org.springframework'
+version '5.3.15'
+
+dependencies {
+    dependencies {
+        api(project(":spring-context"))
+        api(project(":spring-instrument"))
+        api(project(":spring-aop"))
+        api(project(":spring-jdbc"))
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
+        implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.49'
+        implementation group: 'org.springframework.batch', name: 'spring-batch-infrastructure', version: '4.3.4'
+
+    }
+}
