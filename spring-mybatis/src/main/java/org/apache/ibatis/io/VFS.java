@@ -15,8 +15,9 @@
  */
 package org.apache.ibatis.io;
 
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -60,20 +61,10 @@ public abstract class VFS {
         Class<? extends VFS> impl = impls.get(i);
         try {
           vfs = impl.getDeclaredConstructor().newInstance();
-          if (!vfs.isValid() && log.isDebugEnabled()) {
-            log.debug("VFS implementation " + impl.getName()
-                + " is not valid in this environment.");
-          }
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-          log.error("Failed to instantiate " + impl, e);
           return null;
         }
       }
-
-      if (log.isDebugEnabled()) {
-        log.debug("Using VFS adapter " + vfs.getClass().getName());
-      }
-
       return vfs;
     }
   }
@@ -112,9 +103,6 @@ public abstract class VFS {
       return Thread.currentThread().getContextClassLoader().loadClass(className);
       // return ReflectUtil.findClass(className);
     } catch (ClassNotFoundException e) {
-      if (log.isDebugEnabled()) {
-        log.debug("Class not found: " + className);
-      }
       return null;
     }
   }

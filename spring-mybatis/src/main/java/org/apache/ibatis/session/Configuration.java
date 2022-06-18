@@ -41,15 +41,6 @@ import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.io.VFS;
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
-import org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl;
-import org.apache.ibatis.logging.jdk14.Jdk14LoggingImpl;
-import org.apache.ibatis.logging.log4j.Log4jImpl;
-import org.apache.ibatis.logging.log4j2.Log4j2Impl;
-import org.apache.ibatis.logging.nologging.NoLoggingImpl;
-import org.apache.ibatis.logging.slf4j.Slf4jImpl;
-import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.parsing.XNode;
 import org.apache.ibatis.plugin.Interceptor;
@@ -98,7 +89,6 @@ public class Configuration {
   protected boolean nullableOnForEach;
 
   protected String logPrefix;
-  protected Class<? extends Log> logImpl;
   protected Class<? extends VFS> vfsImpl;
   protected Class<?> defaultSqlProviderType;
   protected LocalCacheScope localCacheScope = LocalCacheScope.SESSION;
@@ -181,14 +171,6 @@ public class Configuration {
     typeAliasRegistry.registerAlias("XML", XMLLanguageDriver.class);
     typeAliasRegistry.registerAlias("RAW", RawLanguageDriver.class);
 
-    typeAliasRegistry.registerAlias("SLF4J", Slf4jImpl.class);
-    typeAliasRegistry.registerAlias("COMMONS_LOGGING", JakartaCommonsLoggingImpl.class);
-    typeAliasRegistry.registerAlias("LOG4J", Log4jImpl.class);
-    typeAliasRegistry.registerAlias("LOG4J2", Log4j2Impl.class);
-    typeAliasRegistry.registerAlias("JDK_LOGGING", Jdk14LoggingImpl.class);
-    typeAliasRegistry.registerAlias("STDOUT_LOGGING", StdOutImpl.class);
-    typeAliasRegistry.registerAlias("NO_LOGGING", NoLoggingImpl.class);
-
     typeAliasRegistry.registerAlias("CGLIB", CglibProxyFactory.class);
     typeAliasRegistry.registerAlias("JAVASSIST", JavassistProxyFactory.class);
 
@@ -202,17 +184,6 @@ public class Configuration {
 
   public void setLogPrefix(String logPrefix) {
     this.logPrefix = logPrefix;
-  }
-
-  public Class<? extends Log> getLogImpl() {
-    return logImpl;
-  }
-
-  public void setLogImpl(Class<? extends Log> logImpl) {
-    if (logImpl != null) {
-      this.logImpl = logImpl;
-      LogFactory.useCustomLogging(this.logImpl);
-    }
   }
 
   public Class<? extends VFS> getVfsImpl() {

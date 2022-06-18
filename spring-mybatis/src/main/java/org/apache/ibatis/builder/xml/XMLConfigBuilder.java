@@ -22,7 +22,6 @@ import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.executor.loader.ProxyFactory;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.io.VFS;
-import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.parsing.XNode;
@@ -101,7 +100,6 @@ public class XMLConfigBuilder extends BaseBuilder {
       propertiesElement(root.evalNode("properties"));
       Properties settings = settingsAsProperties(root.evalNode("settings"));
       loadCustomVfs(settings);
-      loadCustomLogImpl(settings);
       typeAliasesElement(root.evalNode("typeAliases"));
       pluginElement(root.evalNode("plugins"));
       objectFactoryElement(root.evalNode("objectFactory"));
@@ -146,12 +144,6 @@ public class XMLConfigBuilder extends BaseBuilder {
       }
     }
   }
-
-  private void loadCustomLogImpl(Properties props) {
-    Class<? extends Log> logImpl = resolveClass(props.getProperty("logImpl"));
-    configuration.setLogImpl(logImpl);
-  }
-
   private void typeAliasesElement(XNode parent) {
     if (parent != null) {
       for (XNode child : parent.getChildren()) {

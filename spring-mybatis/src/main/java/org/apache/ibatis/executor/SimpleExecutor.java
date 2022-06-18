@@ -17,7 +17,6 @@ package org.apache.ibatis.executor;
 
 import org.apache.ibatis.cursor.Cursor;
 import org.apache.ibatis.executor.statement.StatementHandler;
-import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.Configuration;
@@ -46,7 +45,7 @@ public class SimpleExecutor extends BaseExecutor {
     try {
       Configuration configuration = ms.getConfiguration();
       StatementHandler handler = configuration.newStatementHandler(this, ms, parameter, RowBounds.DEFAULT, null, null);
-      stmt = prepareStatement(handler, ms.getStatementLog());
+      stmt = prepareStatement(handler);
       return handler.update(stmt);
     } finally {
       closeStatement(stmt);
@@ -59,7 +58,7 @@ public class SimpleExecutor extends BaseExecutor {
     try {
       Configuration configuration = ms.getConfiguration();
       StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, resultHandler, boundSql);
-      stmt = prepareStatement(handler, ms.getStatementLog());
+      stmt = prepareStatement(handler);
       return handler.query(stmt, resultHandler);
     } finally {
       closeStatement(stmt);
@@ -70,7 +69,7 @@ public class SimpleExecutor extends BaseExecutor {
   protected <E> Cursor<E> doQueryCursor(MappedStatement ms, Object parameter, RowBounds rowBounds, BoundSql boundSql) throws SQLException {
     Configuration configuration = ms.getConfiguration();
     StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, null, boundSql);
-    Statement stmt = prepareStatement(handler, ms.getStatementLog());
+    Statement stmt = prepareStatement(handler);
     Cursor<E> cursor = handler.queryCursor(stmt);
     stmt.closeOnCompletion();
     return cursor;
@@ -81,9 +80,9 @@ public class SimpleExecutor extends BaseExecutor {
     return Collections.emptyList();
   }
 
-  private Statement prepareStatement(StatementHandler handler, Log statementLog) throws SQLException {
+  private Statement prepareStatement(StatementHandler handler) throws SQLException {
     Statement stmt;
-    Connection connection = getConnection(statementLog);
+    Connection connection = getConnection();
     stmt = handler.prepare(connection, transaction.getTimeout());
     handler.parameterize(stmt);
     return stmt;

@@ -19,9 +19,8 @@ import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.cache.impl.PerpetualCache;
 import org.apache.ibatis.cursor.Cursor;
 import org.apache.ibatis.executor.statement.StatementUtil;
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
-import org.apache.ibatis.logging.jdbc.ConnectionLogger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
@@ -329,13 +328,8 @@ public abstract class BaseExecutor implements Executor {
     return list;
   }
 
-  protected Connection getConnection(Log statementLog) throws SQLException {
-    Connection connection = transaction.getConnection();
-    if (statementLog.isDebugEnabled()) {
-      return ConnectionLogger.newInstance(connection, statementLog, queryStack);
-    } else {
-      return connection;
-    }
+  protected Connection getConnection() throws SQLException {
+    return transaction.getConnection();
   }
 
   @Override

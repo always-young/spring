@@ -11,6 +11,8 @@ dependencies {
         annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
         implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.49'
         implementation group: 'org.springframework.batch', name: 'spring-batch-infrastructure', version: '4.3.4'
-
+        implementation group: 'ognl', name: 'ognl', version: '3.3.2'
+        implementation group: 'cglib', name: 'cglib', version: '3.3.0'
+        implementation group: 'org.javassist', name: 'javassist', version: '3.28.0-GA'
     }
 }

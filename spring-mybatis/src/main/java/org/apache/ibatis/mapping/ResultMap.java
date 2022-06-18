@@ -15,10 +15,11 @@
  */
 package org.apache.ibatis.mapping;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.builder.BuilderException;
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
+
 import org.apache.ibatis.reflection.ParamNameUtil;
 import org.apache.ibatis.session.Configuration;
 

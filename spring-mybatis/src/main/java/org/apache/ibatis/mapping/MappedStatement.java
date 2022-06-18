@@ -15,12 +15,11 @@
  */
 package org.apache.ibatis.mapping;
 
+import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.cache.Cache;
 import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator;
 import org.apache.ibatis.executor.keygen.KeyGenerator;
 import org.apache.ibatis.executor.keygen.NoKeyGenerator;
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.scripting.LanguageDriver;
 import org.apache.ibatis.session.Configuration;
 
@@ -53,7 +52,6 @@ public final class MappedStatement {
   private String[] keyColumns;
   private boolean hasNestedResultMaps;
   private String databaseId;
-  private Log statementLog;
   private LanguageDriver lang;
   private String[] resultSets;
 
@@ -78,7 +76,6 @@ public final class MappedStatement {
       if (configuration.getLogPrefix() != null) {
         logId = configuration.getLogPrefix() + id;
       }
-      mappedStatement.statementLog = LogFactory.getLog(logId);
       mappedStatement.lang = configuration.getDefaultScriptingLanguageInstance();
     }
 
@@ -276,10 +273,6 @@ public final class MappedStatement {
 
   public String[] getKeyColumns() {
     return keyColumns;
-  }
-
-  public Log getStatementLog() {
-    return statementLog;
   }
 
   public LanguageDriver getLang() {
