@@ -74,8 +74,8 @@ import static org.springframework.util.Assert.notNull;
  *
  * <pre class="code">
  * {@code
- *   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
- *       <property name="basePackage" value="org.mybatis.spring.sample.mapper" />
+ *   <bean class="org.apache.spring.mapper.MapperScannerConfigurer">
+ *       <property name="basePackage" value="org.apache.spring.sample.mapper" />
  *       <!-- optional unless there are multiple session factories defined -->
  *       <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
  *   </bean>

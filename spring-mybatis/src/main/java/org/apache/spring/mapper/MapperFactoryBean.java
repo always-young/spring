@@ -31,7 +31,7 @@ import static org.springframework.util.Assert.notNull;
  *
  * <pre class="code">
  * {@code
- *   <bean id="baseMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" abstract="true" lazy-init="true">
+ *   <bean id="baseMapper" class="org.apache.spring.mapper.MapperFactoryBean" abstract="true" lazy-init="true">
  *     <property name="sqlSessionFactory" ref="sqlSessionFactory" />
  *   </bean>
  *

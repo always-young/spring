@@ -1,8 +1,8 @@
 package org.kevin.config;
 
 import lombok.val;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.annotation.MapperScan;
+import org.apache.spring.SqlSessionFactoryBean;
+import org.apache.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;

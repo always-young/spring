@@ -38,7 +38,7 @@ import java.lang.annotation.*;
  *
  * <pre class="code">
  * &#064;Configuration
- * &#064;MapperScan("org.mybatis.spring.sample.mapper")
+ * &#064;MapperScan("org.apache.spring.sample.mapper")
  * public class AppConfig {
  *
  *   &#064;Bean

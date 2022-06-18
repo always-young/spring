@@ -30,7 +30,7 @@ import java.util.Map;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
 import static org.apache.ibatis.reflection.ExceptionUtil.unwrapThrowable;
-import static org.mybatis.spring.SqlSessionUtils.*;
+import static org.apache.spring.SqlSessionUtils.*;
 import static org.springframework.util.Assert.notNull;
 
 /**
@@ -51,7 +51,7 @@ import static org.springframework.util.Assert.notNull;
  *
  * <pre class="code">
  * {@code
- * <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+ * <bean id="sqlSessionTemplate" class="org.apache.spring.SqlSessionTemplate">
  *   <constructor-arg ref="sqlSessionFactory" />
  * </bean>
  * }
@@ -387,7 +387,7 @@ public class SqlSessionTemplate implements SqlSession, DisposableBean {
    * <pre>
    * {@code
    *
-   * <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+   * <bean id="sqlSession" class="org.apache.spring.SqlSessionTemplate">
    *  <constructor-arg index="0" ref="sqlSessionFactory" />
    * </bean>
    * }

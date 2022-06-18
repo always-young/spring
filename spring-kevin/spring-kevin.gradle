@@ -9,7 +9,7 @@ dependencies {
 
    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
-   compileOnly group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.9.1'
-   compileOnly group: 'org.aspectj', name: 'aspectjrt', version: '1.9.9.1'
+   implementation group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.7'
+   implementation group: 'org.aspectj', name: 'aspectjrt', version: '1.9.7'
 
 }
