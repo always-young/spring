@@ -22,8 +22,3 @@ dependencies {
 	optional("javax.cache:cache-api")  // for JCache aspect
 	optional("javax.transaction:javax.transaction-api")  // for @javax.transaction.Transactional support
 }
-
-eclipse.project {
-	natures += "org.eclipse.ajdt.ui.ajnature"
-	buildCommands = [new org.gradle.plugins.ide.eclipse.model.BuildCommand("org.eclipse.ajdt.core.ajbuilder")]
-}

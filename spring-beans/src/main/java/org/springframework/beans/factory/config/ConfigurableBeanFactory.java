@@ -31,127 +31,44 @@ import org.springframework.core.metrics.ApplicationStartup;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringValueResolver;
 
-/**
- * Configuration interface to be implemented by most bean factories. Provides
- * facilities to configure a bean factory, in addition to the bean factory
- * client methods in the {@link org.springframework.beans.factory.BeanFactory}
- * interface.
- *
- * <p>This bean factory interface is not meant to be used in normal application
- * code: Stick to {@link org.springframework.beans.factory.BeanFactory} or
- * {@link org.springframework.beans.factory.ListableBeanFactory} for typical
- * needs. This extended interface is just meant to allow for framework-internal
- * plug'n'play and for special access to bean factory configuration methods.
- *
- * @author Juergen Hoeller
- * @since 03.11.2003
- * @see org.springframework.beans.factory.BeanFactory
- * @see org.springframework.beans.factory.ListableBeanFactory
- * @see ConfigurableListableBeanFactory
- */
+//可配置的bean factory 就是一堆set方法
 public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, SingletonBeanRegistry {
 
-	/**
-	 * Scope identifier for the standard singleton scope: {@value}.
-	 * <p>Custom scopes can be added via {@code registerScope}.
-	 * @see #registerScope
-	 */
+
 	String SCOPE_SINGLETON = "singleton";
 
-	/**
-	 * Scope identifier for the standard prototype scope: {@value}.
-	 * <p>Custom scopes can be added via {@code registerScope}.
-	 * @see #registerScope
-	 */
 	String SCOPE_PROTOTYPE = "prototype";
 
-
-	/**
-	 * Set the parent of this bean factory.
-	 * <p>Note that the parent cannot be changed: It should only be set outside
-	 * a constructor if it isn't available at the time of factory instantiation.
-	 * @param parentBeanFactory the parent BeanFactory
-	 * @throws IllegalStateException if this factory is already associated with
-	 * a parent BeanFactory
-	 * @see #getParentBeanFactory()
-	 */
+	//设置父容器
 	void setParentBeanFactory(BeanFactory parentBeanFactory) throws IllegalStateException;
 
-	/**
-	 * Set the class loader to use for loading bean classes.
-	 * Default is the thread context class loader.
-	 * <p>Note that this class loader will only apply to bean definitions
-	 * that do not carry a resolved bean class yet. This is the case as of
-	 * Spring 2.0 by default: Bean definitions only carry bean class names,
-	 * to be resolved once the factory processes the bean definition.
-	 * @param beanClassLoader the class loader to use,
-	 * or {@code null} to suggest the default class loader
-	 */
+	//设置bean的class loader
 	void setBeanClassLoader(@Nullable ClassLoader beanClassLoader);
 
-	/**
-	 * Return this factory's class loader for loading bean classes
-	 * (only {@code null} if even the system ClassLoader isn't accessible).
-	 * @see org.springframework.util.ClassUtils#forName(String, ClassLoader)
-	 */
+	//获取bean的class loader
 	@Nullable
 	ClassLoader getBeanClassLoader();
 
-	/**
-	 * Specify a temporary ClassLoader to use for type matching purposes.
-	 * Default is none, simply using the standard bean ClassLoader.
-	 * <p>A temporary ClassLoader is usually just specified if
-	 * <i>load-time weaving</i> is involved, to make sure that actual bean
-	 * classes are loaded as lazily as possible. The temporary loader is
-	 * then removed once the BeanFactory completes its bootstrap phase.
-	 * @since 2.5
-	 */
+
 	void setTempClassLoader(@Nullable ClassLoader tempClassLoader);
 
-	/**
-	 * Return the temporary ClassLoader to use for type matching purposes,
-	 * if any.
-	 * @since 2.5
-	 */
+
 	@Nullable
 	ClassLoader getTempClassLoader();
 
-	/**
-	 * Set whether to cache bean metadata such as given bean definitions
-	 * (in merged fashion) and resolved bean classes. Default is on.
-	 * <p>Turn this flag off to enable hot-refreshing of bean definition objects
-	 * and in particular bean classes. If this flag is off, any creation of a bean
-	 * instance will re-query the bean class loader for newly resolved classes.
-	 */
+
 	void setCacheBeanMetadata(boolean cacheBeanMetadata);
 
-	/**
-	 * Return whether to cache bean metadata such as given bean definitions
-	 * (in merged fashion) and resolved bean classes.
-	 */
+
 	boolean isCacheBeanMetadata();
 
-	/**
-	 * Specify the resolution strategy for expressions in bean definition values.
-	 * <p>There is no expression support active in a BeanFactory by default.
-	 * An ApplicationContext will typically set a standard expression strategy
-	 * here, supporting "#{...}" expressions in a Unified EL compatible style.
-	 * @since 3.0
-	 */
+
 	void setBeanExpressionResolver(@Nullable BeanExpressionResolver resolver);
 
-	/**
-	 * Return the resolution strategy for expressions in bean definition values.
-	 * @since 3.0
-	 */
 	@Nullable
 	BeanExpressionResolver getBeanExpressionResolver();
 
-	/**
-	 * Specify a Spring 3.0 ConversionService to use for converting
-	 * property values, as an alternative to JavaBeans PropertyEditors.
-	 * @since 3.0
-	 */
+
 	void setConversionService(@Nullable ConversionService conversionService);
 
 	/**
@@ -190,31 +107,11 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	 */
 	void copyRegisteredEditorsTo(PropertyEditorRegistry registry);
 
-	/**
-	 * Set a custom type converter that this BeanFactory should use for converting
-	 * bean property values, constructor argument values, etc.
-	 * <p>This will override the default PropertyEditor mechanism and hence make
-	 * any custom editors or custom editor registrars irrelevant.
-	 * @since 2.5
-	 * @see #addPropertyEditorRegistrar
-	 * @see #registerCustomEditor
-	 */
 	void setTypeConverter(TypeConverter typeConverter);
 
-	/**
-	 * Obtain a type converter as used by this BeanFactory. This may be a fresh
-	 * instance for each call, since TypeConverters are usually <i>not</i> thread-safe.
-	 * <p>If the default PropertyEditor mechanism is active, the returned
-	 * TypeConverter will be aware of all custom editors that have been registered.
-	 * @since 2.5
-	 */
+
 	TypeConverter getTypeConverter();
 
-	/**
-	 * Add a String resolver for embedded values such as annotation attributes.
-	 * @param valueResolver the String resolver to apply to embedded values
-	 * @since 3.0
-	 */
 	void addEmbeddedValueResolver(StringValueResolver valueResolver);
 
 	/**
@@ -308,26 +205,9 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	 */
 	void copyConfigurationFrom(ConfigurableBeanFactory otherFactory);
 
-	/**
-	 * Given a bean name, create an alias. We typically use this method to
-	 * support names that are illegal within XML ids (used for bean names).
-	 * <p>Typically invoked during factory configuration, but can also be
-	 * used for runtime registration of aliases. Therefore, a factory
-	 * implementation should synchronize alias access.
-	 * @param beanName the canonical name of the target bean
-	 * @param alias the alias to be registered for the bean
-	 * @throws BeanDefinitionStoreException if the alias is already in use
-	 */
 	void registerAlias(String beanName, String alias) throws BeanDefinitionStoreException;
 
-	/**
-	 * Resolve all alias target names and aliases registered in this
-	 * factory, applying the given StringValueResolver to them.
-	 * <p>The value resolver may for example resolve placeholders
-	 * in target bean names and even in alias names.
-	 * @param valueResolver the StringValueResolver to apply
-	 * @since 2.5
-	 */
+
 	void resolveAliases(StringValueResolver valueResolver);
 
 	/**

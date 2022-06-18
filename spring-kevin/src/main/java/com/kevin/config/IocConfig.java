@@ -17,4 +17,12 @@ public class IocConfig {
         user.setUsername("kevin");
         return user;
     }
+
+    @Bean
+    public User user2() {
+        User user = new User();
+        user.setId(2L);
+        user.setUsername("kevin2");
+        return user;
+    }
 }

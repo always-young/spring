@@ -148,20 +148,20 @@ pluginManager.withPlugin("kotlin") {
 }
 
 // Configure the JMH plugin to use the toolchain for generating and running JMH bytecode
-pluginManager.withPlugin("me.champeau.jmh") {
-	if (mainToolchainConfigured() || testToolchainConfigured()) {
-		tasks.matching { it.name.contains('jmh') && it.hasProperty('javaLauncher') }.configureEach {
-			javaLauncher.set(javaToolchains.launcherFor {
-				languageVersion.set(testToolchainLanguageVersion())
-			})
-		}
-		tasks.withType(JavaCompile).matching { it.name.contains("Jmh") }.configureEach {
-			javaCompiler = javaToolchains.compilerFor {
-				languageVersion = testToolchainLanguageVersion()
-			}
-		}
-	}
-}
+//pluginManager.withPlugin("me.champeau.jmh") {
+//	if (mainToolchainConfigured() || testToolchainConfigured()) {
+//		tasks.matching { it.name.contains('jmh') && it.hasProperty('javaLauncher') }.configureEach {
+//			javaLauncher.set(javaToolchains.launcherFor {
+//				languageVersion.set(testToolchainLanguageVersion())
+//			})
+//		}
+//		tasks.withType(JavaCompile).matching { it.name.contains("Jmh") }.configureEach {
+//			javaCompiler = javaToolchains.compilerFor {
+//				languageVersion = testToolchainLanguageVersion()
+//			}
+//		}
+//	}
+//}
 
 // Store resolved Toolchain JVM information as custom values in the build scan.
 rootProject.ext {

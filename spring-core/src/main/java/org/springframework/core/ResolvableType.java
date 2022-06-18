@@ -994,34 +994,12 @@ public class ResolvableType implements Serializable {
 	}
 
 
-	// Factory methods
-
-	/**
-	 * Return a {@link ResolvableType} for the specified {@link Class},
-	 * using the full generic type information for assignability checks.
-	 * <p>For example: {@code ResolvableType.forClass(MyArrayList.class)}.
-	 * @param clazz the class to introspect ({@code null} is semantically
-	 * equivalent to {@code Object.class} for typical use cases here)
-	 * @return a {@link ResolvableType} for the specified class
-	 * @see #forClass(Class, Class)
-	 * @see #forClassWithGenerics(Class, Class...)
-	 */
+	//返回ResolvableType
 	public static ResolvableType forClass(@Nullable Class<?> clazz) {
 		return new ResolvableType(clazz);
 	}
 
-	/**
-	 * Return a {@link ResolvableType} for the specified {@link Class},
-	 * doing assignability checks against the raw class only (analogous to
-	 * {@link Class#isAssignableFrom}, which this serves as a wrapper for.
-	 * <p>For example: {@code ResolvableType.forRawClass(List.class)}.
-	 * @param clazz the class to introspect ({@code null} is semantically
-	 * equivalent to {@code Object.class} for typical use cases here)
-	 * @return a {@link ResolvableType} for the specified class
-	 * @since 4.2
-	 * @see #forClass(Class)
-	 * @see #getRawClass()
-	 */
+	//根据原始类型创建
 	public static ResolvableType forRawClass(@Nullable Class<?> clazz) {
 		return new ResolvableType(clazz) {
 			@Override

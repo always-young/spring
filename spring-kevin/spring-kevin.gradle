@@ -4,8 +4,12 @@ version '5.3.15'
 
 dependencies {
    api(project(":spring-context"))
+   api(project(":spring-instrument"))
+   api(project(":spring-aop"))
 
    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
+   compileOnly group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.9.1'
+   compileOnly group: 'org.aspectj', name: 'aspectjrt', version: '1.9.9.1'
 
 }

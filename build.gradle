@@ -314,7 +314,7 @@ configure([rootProject] + javaProjects) { project ->
 	apply plugin: "java"
 	apply plugin: 'org.springframework.build.compile'
 	apply from: "${rootDir}/gradle/toolchains.gradle"
-	apply from: "${rootDir}/gradle/ide.gradle"
+	//apply from: "${rootDir}/gradle/ide.gradle"
 
 	pluginManager.withPlugin("kotlin") {
 		apply plugin: "org.jetbrains.dokka"
@@ -324,7 +324,7 @@ configure([rootProject] + javaProjects) { project ->
 			kotlinOptions {
 				languageVersion = "1.3"
 				apiVersion = "1.3"
-				freeCompilerArgs = ["-Xjsr305=strict", "-Xsuppress-version-warnings", "-Xopt-in=kotlin.RequiresOptIn"]
+				freeCompilerArgs = ["-Xjsr305=strict","-opt-in=kotlin.RequiresOptIn"]
 				allWarningsAsErrors = true
 			}
 		}
