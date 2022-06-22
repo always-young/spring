@@ -1,13 +1,17 @@
 package com.kevin.config;
 
+import com.kevin.bean.MyBeanPostProcessor;
+import com.kevin.bean.MyInstantiationAwareBeanPostProcessor;
 import com.kevin.bean.User;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * @author kevin lau (双鹰)
  */
 @Configuration
+@ComponentScan("com.kevin.bean")
 public class IocConfig {
 
     @Bean
@@ -24,5 +28,15 @@ public class IocConfig {
         user.setId(2L);
         user.setUsername("kevin2");
         return user;
+    }
+
+    @Bean
+    public MyBeanPostProcessor myBeanPostProcessor(){
+        return new MyBeanPostProcessor();
+    }
+
+    @Bean
+    public MyInstantiationAwareBeanPostProcessor myInstantiationAwareBeanPostProcessor(){
+        return new MyInstantiationAwareBeanPostProcessor();
     }
 }

@@ -30,21 +30,6 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 
-/**
- * Default implementation of the {@link ResourceLoader} interface.
- * Used by {@link ResourceEditor}, and serves as base class for
- * {@link org.springframework.context.support.AbstractApplicationContext}.
- * Can also be used standalone.
- *
- * <p>Will return a {@link UrlResource} if the location value is a URL,
- * and a {@link ClassPathResource} if it is a non-URL path or a
- * "classpath:" pseudo-URL.
- *
- * @author Juergen Hoeller
- * @since 10.03.2004
- * @see FileSystemResourceLoader
- * @see org.springframework.context.support.ClassPathXmlApplicationContext
- */
 public class DefaultResourceLoader implements ResourceLoader {
 
 	@Nullable
@@ -97,14 +82,6 @@ public class DefaultResourceLoader implements ResourceLoader {
 		return (this.classLoader != null ? this.classLoader : ClassUtils.getDefaultClassLoader());
 	}
 
-	/**
-	 * Register the given resolver with this resource loader, allowing for
-	 * additional protocols to be handled.
-	 * <p>Any such resolver will be invoked ahead of this loader's standard
-	 * resolution rules. It may therefore also override any default rules.
-	 * @since 4.3
-	 * @see #getProtocolResolvers()
-	 */
 	public void addProtocolResolver(ProtocolResolver resolver) {
 		Assert.notNull(resolver, "ProtocolResolver must not be null");
 		this.protocolResolvers.add(resolver);

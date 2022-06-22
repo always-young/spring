@@ -210,25 +210,10 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 
 	void resolveAliases(StringValueResolver valueResolver);
 
-	/**
-	 * Return a merged BeanDefinition for the given bean name,
-	 * merging a child bean definition with its parent if necessary.
-	 * Considers bean definitions in ancestor factories as well.
-	 * @param beanName the name of the bean to retrieve the merged definition for
-	 * @return a (potentially merged) BeanDefinition for the given bean
-	 * @throws NoSuchBeanDefinitionException if there is no bean definition with the given name
-	 * @since 2.5
-	 */
+	//获取合并后的bean definition
 	BeanDefinition getMergedBeanDefinition(String beanName) throws NoSuchBeanDefinitionException;
 
-	/**
-	 * Determine whether the bean with the given name is a FactoryBean.
-	 * @param name the name of the bean to check
-	 * @return whether the bean is a FactoryBean
-	 * ({@code false} means the bean exists but is not a FactoryBean)
-	 * @throws NoSuchBeanDefinitionException if there is no bean with the given name
-	 * @since 2.5
-	 */
+	//是否factory bean
 	boolean isFactoryBean(String name) throws NoSuchBeanDefinitionException;
 
 	/**
@@ -248,56 +233,22 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	 */
 	boolean isCurrentlyInCreation(String beanName);
 
-	/**
-	 * Register a dependent bean for the given bean,
-	 * to be destroyed before the given bean is destroyed.
-	 * @param beanName the name of the bean
-	 * @param dependentBeanName the name of the dependent bean
-	 * @since 2.5
-	 */
+	//注册依赖关系
 	void registerDependentBean(String beanName, String dependentBeanName);
 
-	/**
-	 * Return the names of all beans which depend on the specified bean, if any.
-	 * @param beanName the name of the bean
-	 * @return the array of dependent bean names, or an empty array if none
-	 * @since 2.5
-	 */
+	//依赖该bean的所有bean
 	String[] getDependentBeans(String beanName);
 
-	/**
-	 * Return the names of all beans that the specified bean depends on, if any.
-	 * @param beanName the name of the bean
-	 * @return the array of names of beans which the bean depends on,
-	 * or an empty array if none
-	 * @since 2.5
-	 */
+	//被该bean依赖的所有bean
 	String[] getDependenciesForBean(String beanName);
 
-	/**
-	 * Destroy the given bean instance (usually a prototype instance
-	 * obtained from this factory) according to its bean definition.
-	 * <p>Any exception that arises during destruction should be caught
-	 * and logged instead of propagated to the caller of this method.
-	 * @param beanName the name of the bean definition
-	 * @param beanInstance the bean instance to destroy
-	 */
+	//注销一个bean
 	void destroyBean(String beanName, Object beanInstance);
 
-	/**
-	 * Destroy the specified scoped bean in the current target scope, if any.
-	 * <p>Any exception that arises during destruction should be caught
-	 * and logged instead of propagated to the caller of this method.
-	 * @param beanName the name of the scoped bean
-	 */
+
 	void destroyScopedBean(String beanName);
 
-	/**
-	 * Destroy all singleton beans in this factory, including inner beans that have
-	 * been registered as disposable. To be called on shutdown of a factory.
-	 * <p>Any exception that arises during destruction should be caught
-	 * and logged instead of propagated to the caller of this method.
-	 */
+	//销毁所有的单例bean
 	void destroySingletons();
 
 }

@@ -30,16 +30,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.util.StringValueResolver;
 
-/**
- * Simple implementation of the {@link AliasRegistry} interface.
- * <p>Serves as base class for
- * {@link org.springframework.beans.factory.support.BeanDefinitionRegistry}
- * implementations.
- *
- * @author Juergen Hoeller
- * @author Qimiao Chen
- * @since 2.5.2
- */
+
 public class SimpleAliasRegistry implements AliasRegistry {
 
 	/** Logger available to subclasses. */
@@ -184,15 +175,6 @@ public class SimpleAliasRegistry implements AliasRegistry {
 		}
 	}
 
-	/**
-	 * Check whether the given name points back to the given alias as an alias
-	 * in the other direction already, catching a circular reference upfront
-	 * and throwing a corresponding IllegalStateException.
-	 * @param name the candidate name
-	 * @param alias the candidate alias
-	 * @see #registerAlias
-	 * @see #hasAlias
-	 */
 	protected void checkForAliasCircle(String name, String alias) {
 		if (hasAlias(alias, name)) {
 			throw new IllegalStateException("Cannot register alias '" + alias +
