@@ -2,6 +2,7 @@ package com.kevin.bean;
 
 import com.kevin.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,6 +13,7 @@ public class UserService {
 
     @Autowired
     private UserMapper userMapper;
+
 
     @Log
     public User getCurrentUser(){

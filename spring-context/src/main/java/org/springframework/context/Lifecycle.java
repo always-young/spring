@@ -16,37 +16,7 @@
 
 package org.springframework.context;
 
-/**
- * A common interface defining methods for start/stop lifecycle control.
- * The typical use case for this is to control asynchronous processing.
- * <b>NOTE: This interface does not imply specific auto-startup semantics.
- * Consider implementing {@link SmartLifecycle} for that purpose.</b>
- *
- * <p>Can be implemented by both components (typically a Spring bean defined in a
- * Spring context) and containers  (typically a Spring {@link ApplicationContext}
- * itself). Containers will propagate start/stop signals to all components that
- * apply within each container, e.g. for a stop/restart scenario at runtime.
- *
- * <p>Can be used for direct invocations or for management operations via JMX.
- * In the latter case, the {@link org.springframework.jmx.export.MBeanExporter}
- * will typically be defined with an
- * {@link org.springframework.jmx.export.assembler.InterfaceBasedMBeanInfoAssembler},
- * restricting the visibility of activity-controlled components to the Lifecycle
- * interface.
- *
- * <p>Note that the present {@code Lifecycle} interface is only supported on
- * <b>top-level singleton beans</b>. On any other component, the {@code Lifecycle}
- * interface will remain undetected and hence ignored. Also, note that the extended
- * {@link SmartLifecycle} interface provides sophisticated integration with the
- * application context's startup and shutdown phases.
- *
- * @author Juergen Hoeller
- * @since 2.0
- * @see SmartLifecycle
- * @see ConfigurableApplicationContext
- * @see org.springframework.jms.listener.AbstractMessageListenerContainer
- * @see org.springframework.scheduling.quartz.SchedulerFactoryBean
- */
+
 public interface Lifecycle {
 
 	/**

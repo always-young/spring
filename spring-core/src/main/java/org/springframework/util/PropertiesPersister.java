@@ -23,21 +23,6 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.Properties;
 
-/**
- * Strategy interface for persisting {@code java.util.Properties},
- * allowing for pluggable parsing strategies.
- *
- * <p>The default implementation is DefaultPropertiesPersister,
- * providing the native parsing of {@code java.util.Properties},
- * but allowing for reading from any Reader and writing to any Writer
- * (which allows to specify an encoding for a properties file).
- *
- * @author Juergen Hoeller
- * @since 10.03.2004
- * @see DefaultPropertiesPersister
- * @see org.springframework.core.io.support.ResourcePropertiesPersister
- * @see java.util.Properties
- */
 public interface PropertiesPersister {
 
 	/**

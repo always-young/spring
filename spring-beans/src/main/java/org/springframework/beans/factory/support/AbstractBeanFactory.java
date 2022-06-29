@@ -1921,25 +1921,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	 */
 	protected abstract boolean containsBeanDefinition(String beanName);
 
-	/**
-	 * Return the bean definition for the given bean name.
-	 * Subclasses should normally implement caching, as this method is invoked
-	 * by this class every time bean definition metadata is needed.
-	 * <p>Depending on the nature of the concrete bean factory implementation,
-	 * this operation might be expensive (for example, because of directory lookups
-	 * in external registries). However, for listable bean factories, this usually
-	 * just amounts to a local hash lookup: The operation is therefore part of the
-	 * public interface there. The same implementation can serve for both this
-	 * template method and the public interface method in that case.
-	 * @param beanName the name of the bean to find a definition for
-	 * @return the BeanDefinition for this prototype name (never {@code null})
-	 * @throws org.springframework.beans.factory.NoSuchBeanDefinitionException
-	 * if the bean definition cannot be resolved
-	 * @throws BeansException in case of errors
-	 * @see RootBeanDefinition
-	 * @see ChildBeanDefinition
-	 * @see org.springframework.beans.factory.config.ConfigurableListableBeanFactory#getBeanDefinition
-	 */
+
 	protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;
 
 	/**

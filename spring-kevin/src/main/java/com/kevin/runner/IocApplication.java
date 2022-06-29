@@ -26,6 +26,8 @@ public class IocApplication {
 
         //测试循环依赖
         val lifeCycle = context.getBean(LifeCycle.class);
+        val userService = context.getBean(UserService.class);
         lifeCycle.doSomeThing();
+        userService.getCurrentUser();
     }
 }

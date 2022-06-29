@@ -27,30 +27,9 @@ import org.springframework.core.io.ProtocolResolver;
 import org.springframework.core.metrics.ApplicationStartup;
 import org.springframework.lang.Nullable;
 
-/**
- * SPI interface to be implemented by most if not all application contexts.
- * Provides facilities to configure an application context in addition
- * to the application context client methods in the
- * {@link org.springframework.context.ApplicationContext} interface.
- *
- * <p>Configuration and lifecycle methods are encapsulated here to avoid
- * making them obvious to ApplicationContext client code. The present
- * methods should only be used by startup and shutdown code.
- *
- * @author Juergen Hoeller
- * @author Chris Beams
- * @author Sam Brannen
- * @since 03.11.2003
- */
+//可配置的application context
 public interface ConfigurableApplicationContext extends ApplicationContext, Lifecycle, Closeable {
 
-	/**
-	 * Any number of these characters are considered delimiters between
-	 * multiple context config paths in a single String value.
-	 * @see org.springframework.context.support.AbstractXmlApplicationContext#setConfigLocation
-	 * @see org.springframework.web.context.ContextLoader#CONFIG_LOCATION_PARAM
-	 * @see org.springframework.web.servlet.FrameworkServlet#setContextConfigLocation
-	 */
 	String CONFIG_LOCATION_DELIMITERS = ",; \t\n";
 
 	/**
@@ -70,22 +49,12 @@ public interface ConfigurableApplicationContext extends ApplicationContext, Life
 	 */
 	String LOAD_TIME_WEAVER_BEAN_NAME = "loadTimeWeaver";
 
-	/**
-	 * Name of the {@link Environment} bean in the factory.
-	 * @since 3.1
-	 */
 	String ENVIRONMENT_BEAN_NAME = "environment";
 
-	/**
-	 * Name of the System properties bean in the factory.
-	 * @see java.lang.System#getProperties()
-	 */
+
 	String SYSTEM_PROPERTIES_BEAN_NAME = "systemProperties";
 
-	/**
-	 * Name of the System environment bean in the factory.
-	 * @see java.lang.System#getenv()
-	 */
+
 	String SYSTEM_ENVIRONMENT_BEAN_NAME = "systemEnvironment";
 
 	/**
@@ -109,28 +78,11 @@ public interface ConfigurableApplicationContext extends ApplicationContext, Life
 	 */
 	void setId(String id);
 
-	/**
-	 * Set the parent of this application context.
-	 * <p>Note that the parent shouldn't be changed: It should only be set outside
-	 * a constructor if it isn't available when an object of this class is created,
-	 * for example in case of WebApplicationContext setup.
-	 * @param parent the parent context
-	 * @see org.springframework.web.context.ConfigurableWebApplicationContext
-	 */
 	void setParent(@Nullable ApplicationContext parent);
 
-	/**
-	 * Set the {@code Environment} for this application context.
-	 * @param environment the new environment
-	 * @since 3.1
-	 */
+
 	void setEnvironment(ConfigurableEnvironment environment);
 
-	/**
-	 * Return the {@code Environment} for this application context in configurable
-	 * form, allowing for further customization.
-	 * @since 3.1
-	 */
 	@Override
 	ConfigurableEnvironment getEnvironment();
 
@@ -200,16 +152,7 @@ public interface ConfigurableApplicationContext extends ApplicationContext, Life
 	 */
 	void refresh() throws BeansException, IllegalStateException;
 
-	/**
-	 * Register a shutdown hook with the JVM runtime, closing this context
-	 * on JVM shutdown unless it has already been closed at that time.
-	 * <p>This method can be called multiple times. Only one shutdown hook
-	 * (at max) will be registered for each context instance.
-	 * <p>As of Spring Framework 5.2, the {@linkplain Thread#getName() name} of
-	 * the shutdown hook thread should be {@link #SHUTDOWN_HOOK_THREAD_NAME}.
-	 * @see java.lang.Runtime#addShutdownHook
-	 * @see #close()
-	 */
+
 	void registerShutdownHook();
 
 	/**
@@ -223,35 +166,10 @@ public interface ConfigurableApplicationContext extends ApplicationContext, Life
 	@Override
 	void close();
 
-	/**
-	 * Determine whether this application context is active, that is,
-	 * whether it has been refreshed at least once and has not been closed yet.
-	 * @return whether the context is still active
-	 * @see #refresh()
-	 * @see #close()
-	 * @see #getBeanFactory()
-	 */
+
 	boolean isActive();
 
-	/**
-	 * Return the internal bean factory of this application context.
-	 * Can be used to access specific functionality of the underlying factory.
-	 * <p>Note: Do not use this to post-process the bean factory; singletons
-	 * will already have been instantiated before. Use a BeanFactoryPostProcessor
-	 * to intercept the BeanFactory setup process before beans get touched.
-	 * <p>Generally, this internal factory will only be accessible while the context
-	 * is active, that is, in-between {@link #refresh()} and {@link #close()}.
-	 * The {@link #isActive()} flag can be used to check whether the context
-	 * is in an appropriate state.
-	 * @return the underlying bean factory
-	 * @throws IllegalStateException if the context does not hold an internal
-	 * bean factory (usually if {@link #refresh()} hasn't been called yet or
-	 * if {@link #close()} has already been called)
-	 * @see #isActive()
-	 * @see #refresh()
-	 * @see #close()
-	 * @see #addBeanFactoryPostProcessor
-	 */
+	//获取bean factory
 	ConfigurableListableBeanFactory getBeanFactory() throws IllegalStateException;
 
 }

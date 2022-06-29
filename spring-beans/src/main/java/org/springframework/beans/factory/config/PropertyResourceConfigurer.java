@@ -27,28 +27,7 @@ import org.springframework.core.PriorityOrdered;
 import org.springframework.core.io.support.PropertiesLoaderSupport;
 import org.springframework.util.ObjectUtils;
 
-/**
- * Allows for configuration of individual bean property values from a property resource,
- * i.e. a properties file. Useful for custom config files targeted at system
- * administrators that override bean properties configured in the application context.
- *
- * <p>Two concrete implementations are provided in the distribution:
- * <ul>
- * <li>{@link PropertyOverrideConfigurer} for "beanName.property=value" style overriding
- * (<i>pushing</i> values from a properties file into bean definitions)
- * <li>{@link PropertyPlaceholderConfigurer} for replacing "${...}" placeholders
- * (<i>pulling</i> values from a properties file into bean definitions)
- * </ul>
- *
- * <p>Property values can be converted after reading them in, through overriding
- * the {@link #convertPropertyValue} method. For example, encrypted values
- * can be detected and decrypted accordingly before processing them.
- *
- * @author Juergen Hoeller
- * @since 02.10.2003
- * @see PropertyOverrideConfigurer
- * @see PropertyPlaceholderConfigurer
- */
+
 public abstract class PropertyResourceConfigurer extends PropertiesLoaderSupport
 		implements BeanFactoryPostProcessor, PriorityOrdered {
 

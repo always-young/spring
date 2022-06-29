@@ -88,75 +88,15 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.ReflectionUtils;
 
-/**
- * Abstract implementation of the {@link org.springframework.context.ApplicationContext}
- * interface. Doesn't mandate the type of storage used for configuration; simply
- * implements common context functionality. Uses the Template Method design pattern,
- * requiring concrete subclasses to implement abstract methods.
- *
- * <p>In contrast to a plain BeanFactory, an ApplicationContext is supposed
- * to detect special beans defined in its internal bean factory:
- * Therefore, this class automatically registers
- * {@link org.springframework.beans.factory.config.BeanFactoryPostProcessor BeanFactoryPostProcessors},
- * {@link org.springframework.beans.factory.config.BeanPostProcessor BeanPostProcessors},
- * and {@link org.springframework.context.ApplicationListener ApplicationListeners}
- * which are defined as beans in the context.
- *
- * <p>A {@link org.springframework.context.MessageSource} may also be supplied
- * as a bean in the context, with the name "messageSource"; otherwise, message
- * resolution is delegated to the parent context. Furthermore, a multicaster
- * for application events can be supplied as an "applicationEventMulticaster" bean
- * of type {@link org.springframework.context.event.ApplicationEventMulticaster}
- * in the context; otherwise, a default multicaster of type
- * {@link org.springframework.context.event.SimpleApplicationEventMulticaster} will be used.
- *
- * <p>Implements resource loading by extending
- * {@link org.springframework.core.io.DefaultResourceLoader}.
- * Consequently treats non-URL resource paths as class path resources
- * (supporting full class path resource names that include the package path,
- * e.g. "mypackage/myresource.dat"), unless the {@link #getResourceByPath}
- * method is overridden in a subclass.
- *
- * @author Rod Johnson
- * @author Juergen Hoeller
- * @author Mark Fisher
- * @author Stephane Nicoll
- * @author Sam Brannen
- * @author Sebastien Deleuze
- * @author Brian Clozel
- * @since January 21, 2001
- * @see #refreshBeanFactory
- * @see #getBeanFactory
- * @see org.springframework.beans.factory.config.BeanFactoryPostProcessor
- * @see org.springframework.beans.factory.config.BeanPostProcessor
- * @see org.springframework.context.event.ApplicationEventMulticaster
- * @see org.springframework.context.ApplicationListener
- * @see org.springframework.context.MessageSource
- */
+//抽象上下文类
 public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		implements ConfigurableApplicationContext {
 
-	/**
-	 * Name of the MessageSource bean in the factory.
-	 * If none is supplied, message resolution is delegated to the parent.
-	 * @see MessageSource
-	 */
+
 	public static final String MESSAGE_SOURCE_BEAN_NAME = "messageSource";
 
-	/**
-	 * Name of the LifecycleProcessor bean in the factory.
-	 * If none is supplied, a DefaultLifecycleProcessor is used.
-	 * @see org.springframework.context.LifecycleProcessor
-	 * @see org.springframework.context.support.DefaultLifecycleProcessor
-	 */
 	public static final String LIFECYCLE_PROCESSOR_BEAN_NAME = "lifecycleProcessor";
 
-	/**
-	 * Name of the ApplicationEventMulticaster bean in the factory.
-	 * If none is supplied, a default SimpleApplicationEventMulticaster is used.
-	 * @see org.springframework.context.event.ApplicationEventMulticaster
-	 * @see org.springframework.context.event.SimpleApplicationEventMulticaster
-	 */
 	public static final String APPLICATION_EVENT_MULTICASTER_BEAN_NAME = "applicationEventMulticaster";
 
 	/**
@@ -469,20 +409,6 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		return this.lifecycleProcessor;
 	}
 
-	/**
-	 * Return the ResourcePatternResolver to use for resolving location patterns
-	 * into Resource instances. Default is a
-	 * {@link org.springframework.core.io.support.PathMatchingResourcePatternResolver},
-	 * supporting Ant-style location patterns.
-	 * <p>Can be overridden in subclasses, for extended resolution strategies,
-	 * for example in a web environment.
-	 * <p><b>Do not call this when needing to resolve a location pattern.</b>
-	 * Call the context's {@code getResources} method instead, which
-	 * will delegate to the ResourcePatternResolver.
-	 * @return the ResourcePatternResolver for this context
-	 * @see #getResources
-	 * @see org.springframework.core.io.support.PathMatchingResourcePatternResolver
-	 */
 	protected ResourcePatternResolver getResourcePatternResolver() {
 		return new PathMatchingResourcePatternResolver(this);
 	}
@@ -492,14 +418,6 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	// Implementation of ConfigurableApplicationContext interface
 	//---------------------------------------------------------------------
 
-	/**
-	 * Set the parent of this application context.
-	 * <p>The parent {@linkplain ApplicationContext#getEnvironment() environment} is
-	 * {@linkplain ConfigurableEnvironment#merge(ConfigurableEnvironment) merged} with
-	 * this (child) application context environment if the parent is non-{@code null} and
-	 * its environment is an instance of {@link ConfigurableEnvironment}.
-	 * @see ConfigurableEnvironment#merge(ConfigurableEnvironment)
-	 */
 	@Override
 	public void setParent(@Nullable ApplicationContext parent) {
 		this.parent = parent;
@@ -546,13 +464,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		synchronized (this.startupShutdownMonitor) {
 			StartupStep contextRefresh = this.applicationStartup.start("spring.context.refresh");
 
-			// Prepare this context for refreshing.
+			// 启动前初始化
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
-			// Prepare the bean factory for use in this context.
+			// beanfactory初始化
 			prepareBeanFactory(beanFactory);
 
 			try {
@@ -563,7 +481,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				// Invoke factory processors registered as beans in the context.
 				invokeBeanFactoryPostProcessors(beanFactory);
 
-				// Register bean processors that intercept bean creation.
+				// 注册BeanPostProcessor
 				registerBeanPostProcessors(beanFactory);
 				beanPostProcess.end();
 
@@ -579,7 +497,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				// Check for listener beans and register them.
 				registerListeners();
 
-				// Instantiate all remaining (non-lazy-init) singletons.
+				// 实例化单例bean
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
@@ -620,21 +538,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		this.startupDate = System.currentTimeMillis();
 		this.closed.set(false);
 		this.active.set(true);
-
-		if (logger.isDebugEnabled()) {
-			if (logger.isTraceEnabled()) {
-				logger.trace("Refreshing " + this);
-			}
-			else {
-				logger.debug("Refreshing " + getDisplayName());
-			}
-		}
-
 		// Initialize any placeholder property sources in the context environment.
 		initPropertySources();
 
-		// Validate that all properties marked as required are resolvable:
-		// see ConfigurablePropertyResolver#setRequiredProperties
+		//必填参数校验
 		getEnvironment().validateRequiredProperties();
 
 		// Store pre-refresh ApplicationListeners...
@@ -672,11 +579,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		return getBeanFactory();
 	}
 
-	/**
-	 * Configure the factory's standard context characteristics,
-	 * such as the context's ClassLoader and post-processors.
-	 * @param beanFactory the BeanFactory to configure
-	 */
+	//bean factory 容器初始化
 	protected void prepareBeanFactory(ConfigurableListableBeanFactory beanFactory) {
 		// Tell the internal bean factory to use the context's class loader etc.
 		beanFactory.setBeanClassLoader(getClassLoader());
@@ -1444,20 +1347,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 
-	//---------------------------------------------------------------------
-	// Abstract methods that must be implemented by subclasses
-	//---------------------------------------------------------------------
 
-	/**
-	 * Subclasses must implement this method to perform the actual configuration load.
-	 * The method is invoked by {@link #refresh()} before any other initialization work.
-	 * <p>A subclass will either create a new bean factory and hold a reference to it,
-	 * or return a single BeanFactory instance that it holds. In the latter case, it will
-	 * usually throw an IllegalStateException if refreshing the context more than once.
-	 * @throws BeansException if initialization of the bean factory failed
-	 * @throws IllegalStateException if already initialized and multiple refresh
-	 * attempts are not supported
-	 */
 	protected abstract void refreshBeanFactory() throws BeansException, IllegalStateException;
 
 	/**
@@ -1467,19 +1357,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 */
 	protected abstract void closeBeanFactory();
 
-	/**
-	 * Subclasses must return their internal bean factory here. They should implement the
-	 * lookup efficiently, so that it can be called repeatedly without a performance penalty.
-	 * <p>Note: Subclasses should check whether the context is still active before
-	 * returning the internal bean factory. The internal factory should generally be
-	 * considered unavailable once the context has been closed.
-	 * @return this application context's internal bean factory (never {@code null})
-	 * @throws IllegalStateException if the context does not hold an internal bean factory yet
-	 * (usually if {@link #refresh()} has never been called) or if the context has been
-	 * closed already
-	 * @see #refreshBeanFactory()
-	 * @see #closeBeanFactory()
-	 */
+
 	@Override
 	public abstract ConfigurableListableBeanFactory getBeanFactory() throws IllegalStateException;
 
