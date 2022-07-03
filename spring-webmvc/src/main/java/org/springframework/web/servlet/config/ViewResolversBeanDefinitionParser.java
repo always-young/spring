@@ -16,10 +16,6 @@
 
 package org.springframework.web.servlet.config;
 
-import java.util.List;
-
-import org.w3c.dom.Element;
-
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.parsing.BeanComponentDefinition;
@@ -34,10 +30,10 @@ import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.ViewResolverComposite;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
-import org.springframework.web.servlet.view.groovy.GroovyMarkupViewResolver;
 import org.springframework.web.servlet.view.script.ScriptTemplateViewResolver;
-import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
+import org.w3c.dom.Element;
+
+import java.util.List;
 
 /**
  * Parse the {@code view-resolvers} MVC namespace element and register
@@ -90,20 +86,6 @@ public class ViewResolversBeanDefinitionParser implements BeanDefinitionParser {
 				resolverBeanDef = new RootBeanDefinition(InternalResourceViewResolver.class);
 				resolverBeanDef.getPropertyValues().add("prefix", "/WEB-INF/");
 				resolverBeanDef.getPropertyValues().add("suffix", ".jsp");
-				addUrlBasedViewResolverProperties(resolverElement, resolverBeanDef);
-			}
-			else if ("tiles".equals(name)) {
-				resolverBeanDef = new RootBeanDefinition(TilesViewResolver.class);
-				addUrlBasedViewResolverProperties(resolverElement, resolverBeanDef);
-			}
-			else if ("freemarker".equals(name)) {
-				resolverBeanDef = new RootBeanDefinition(FreeMarkerViewResolver.class);
-				resolverBeanDef.getPropertyValues().add("suffix", ".ftl");
-				addUrlBasedViewResolverProperties(resolverElement, resolverBeanDef);
-			}
-			else if ("groovy".equals(name)) {
-				resolverBeanDef = new RootBeanDefinition(GroovyMarkupViewResolver.class);
-				resolverBeanDef.getPropertyValues().add("suffix", ".tpl");
 				addUrlBasedViewResolverProperties(resolverElement, resolverBeanDef);
 			}
 			else if ("script-template".equals(name)) {

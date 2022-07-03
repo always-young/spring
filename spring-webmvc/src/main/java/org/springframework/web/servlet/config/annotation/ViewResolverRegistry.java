@@ -34,14 +34,8 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
-import org.springframework.web.servlet.view.groovy.GroovyMarkupConfigurer;
-import org.springframework.web.servlet.view.groovy.GroovyMarkupViewResolver;
 import org.springframework.web.servlet.view.script.ScriptTemplateConfigurer;
 import org.springframework.web.servlet.view.script.ScriptTemplateViewResolver;
-import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
-import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 /**
  * Assist with the configuration of a chain of
@@ -166,56 +160,6 @@ public class ViewResolverRegistry {
 	}
 
 	/**
-	 * Register Tiles 3.x view resolver.
-	 * <p><strong>Note</strong> that you must also configure Tiles by adding a
-	 * {@link org.springframework.web.servlet.view.tiles3.TilesConfigurer} bean.
-	 */
-	public UrlBasedViewResolverRegistration tiles() {
-		if (!checkBeanOfType(TilesConfigurer.class)) {
-			throw new BeanInitializationException("In addition to a Tiles view resolver " +
-					"there must also be a single TilesConfigurer bean in this web application context " +
-					"(or its parent).");
-		}
-		TilesRegistration registration = new TilesRegistration();
-		this.viewResolvers.add(registration.getViewResolver());
-		return registration;
-	}
-
-	/**
-	 * Register a FreeMarker view resolver with an empty default view name
-	 * prefix and a default suffix of ".ftl".
-	 * <p><strong>Note</strong> that you must also configure FreeMarker by adding a
-	 * {@link org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer} bean.
-	 */
-	public UrlBasedViewResolverRegistration freeMarker() {
-		if (!checkBeanOfType(FreeMarkerConfigurer.class)) {
-			throw new BeanInitializationException("In addition to a FreeMarker view resolver " +
-					"there must also be a single FreeMarkerConfig bean in this web application context " +
-					"(or its parent): FreeMarkerConfigurer is the usual implementation. " +
-					"This bean may be given any name.");
-		}
-		FreeMarkerRegistration registration = new FreeMarkerRegistration();
-		this.viewResolvers.add(registration.getViewResolver());
-		return registration;
-	}
-
-	/**
-	 * Register a Groovy markup view resolver with an empty default view name
-	 * prefix and a default suffix of ".tpl".
-	 */
-	public UrlBasedViewResolverRegistration groovy() {
-		if (!checkBeanOfType(GroovyMarkupConfigurer.class)) {
-			throw new BeanInitializationException("In addition to a Groovy markup view resolver " +
-					"there must also be a single GroovyMarkupConfig bean in this web application context " +
-					"(or its parent): GroovyMarkupConfigurer is the usual implementation. " +
-					"This bean may be given any name.");
-		}
-		GroovyMarkupRegistration registration = new GroovyMarkupRegistration();
-		this.viewResolvers.add(registration.getViewResolver());
-		return registration;
-	}
-
-	/**
 	 * Register a script template view resolver with an empty default view name prefix and suffix.
 	 * @since 4.2
 	 */
@@ -290,32 +234,6 @@ public class ViewResolverRegistry {
 			return this.viewResolvers;
 		}
 	}
-
-
-	private static class TilesRegistration extends UrlBasedViewResolverRegistration {
-
-		public TilesRegistration() {
-			super(new TilesViewResolver());
-		}
-	}
-
-	private static class FreeMarkerRegistration extends UrlBasedViewResolverRegistration {
-
-		public FreeMarkerRegistration() {
-			super(new FreeMarkerViewResolver());
-			getViewResolver().setSuffix(".ftl");
-		}
-	}
-
-
-	private static class GroovyMarkupRegistration extends UrlBasedViewResolverRegistration {
-
-		public GroovyMarkupRegistration() {
-			super(new GroovyMarkupViewResolver());
-			getViewResolver().setSuffix(".tpl");
-		}
-	}
-
 
 	private static class ScriptRegistration extends UrlBasedViewResolverRegistration {
 
