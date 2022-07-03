@@ -28,6 +28,7 @@ include "spring-webmvc"
 include "framework-bom"
 include 'spring-kevin'
 include 'spring-mybatis'
+include 'spring-boot'
 
 
 rootProject.name = "spring"

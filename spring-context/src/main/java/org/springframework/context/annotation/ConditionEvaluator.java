@@ -38,13 +38,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.MultiValueMap;
 
-/**
- * Internal class used to evaluate {@link Conditional} annotations.
- *
- * @author Phillip Webb
- * @author Juergen Hoeller
- * @since 4.0
- */
+//条件判断器
 class ConditionEvaluator {
 
 	private final ConditionContextImpl context;

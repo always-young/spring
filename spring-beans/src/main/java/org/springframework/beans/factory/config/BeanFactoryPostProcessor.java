@@ -19,7 +19,7 @@ package org.springframework.beans.factory.config;
 import org.springframework.beans.BeansException;
 
 /**
- * beanfactory初始化完成后调用
+ * bean factory初始化完成后调用
  */
 @FunctionalInterface
 public interface BeanFactoryPostProcessor {

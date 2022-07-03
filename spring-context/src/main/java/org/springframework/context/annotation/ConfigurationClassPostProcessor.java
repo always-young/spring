@@ -69,25 +69,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
-/**
- * {@link BeanFactoryPostProcessor} used for bootstrapping processing of
- * {@link Configuration @Configuration} classes.
- *
- * <p>Registered by default when using {@code <context:annotation-config/>} or
- * {@code <context:component-scan/>}. Otherwise, may be declared manually as
- * with any other {@link BeanFactoryPostProcessor}.
- *
- * <p>This post processor is priority-ordered as it is important that any
- * {@link Bean @Bean} methods declared in {@code @Configuration} classes have
- * their corresponding bean definitions registered before any other
- * {@code BeanFactoryPostProcessor} executes.
- *
- * @author Chris Beams
- * @author Juergen Hoeller
- * @author Phillip Webb
- * @author Sam Brannen
- * @since 3.0
- */
+//处理@Configuration注解的
 public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPostProcessor,
 		PriorityOrdered, ResourceLoaderAware, ApplicationStartupAware, BeanClassLoaderAware, EnvironmentAware {
 
@@ -177,22 +159,6 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 		this.setMetadataReaderFactoryCalled = true;
 	}
 
-	/**
-	 * Set the {@link BeanNameGenerator} to be used when triggering component scanning
-	 * from {@link Configuration} classes and when registering {@link Import}'ed
-	 * configuration classes. The default is a standard {@link AnnotationBeanNameGenerator}
-	 * for scanned components (compatible with the default in {@link ClassPathBeanDefinitionScanner})
-	 * and a variant thereof for imported configuration classes (using unique fully-qualified
-	 * class names instead of standard component overriding).
-	 * <p>Note that this strategy does <em>not</em> apply to {@link Bean} methods.
-	 * <p>This setter is typically only appropriate when configuring the post-processor as a
-	 * standalone bean definition in XML, e.g. not using the dedicated {@code AnnotationConfig*}
-	 * application contexts or the {@code <context:annotation-config>} element. Any bean name
-	 * generator specified against the application context will take precedence over any set here.
-	 * @since 3.1.1
-	 * @see AnnotationConfigApplicationContext#setBeanNameGenerator(BeanNameGenerator)
-	 * @see AnnotationConfigUtils#CONFIGURATION_BEAN_NAME_GENERATOR
-	 */
 	public void setBeanNameGenerator(BeanNameGenerator beanNameGenerator) {
 		Assert.notNull(beanNameGenerator, "BeanNameGenerator must not be null");
 		this.localBeanNameGeneratorSet = true;

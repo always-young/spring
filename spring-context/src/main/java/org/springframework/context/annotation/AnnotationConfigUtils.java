@@ -137,14 +137,7 @@ public abstract class AnnotationConfigUtils {
 		registerAnnotationConfigProcessors(registry, null);
 	}
 
-	/**
-	 * Register all relevant annotation post processors in the given registry.
-	 * @param registry the registry to operate on
-	 * @param source the configuration source element (already extracted)
-	 * that this registration was triggered from. May be {@code null}.
-	 * @return a Set of BeanDefinitionHolders, containing all bean definitions
-	 * that have actually been registered by this call
-	 */
+	//注入spring自带的一些bean
 	public static Set<BeanDefinitionHolder> registerAnnotationConfigProcessors(
 			BeanDefinitionRegistry registry, @Nullable Object source) {
 
