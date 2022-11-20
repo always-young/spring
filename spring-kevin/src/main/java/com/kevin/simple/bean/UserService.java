@@ -16,7 +16,7 @@ public class UserService {
 
     @Log
     public User getCurrentUser(){
-        System.out.println("方法执行中");
+        System.out.println("user service 方法执行中");
         User user = new User();
         user.setId(10L);
         user.setUsername("kevin lau");

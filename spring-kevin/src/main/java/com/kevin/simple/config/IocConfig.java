@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @author kevin lau (双鹰)
  */
 @Configuration
-@ComponentScan("com.kevin.bean")
+@ComponentScan("com.kevin.simple.bean")
 public class IocConfig {
 
     @Bean
