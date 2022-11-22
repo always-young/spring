@@ -4,19 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+    <typeAliases>
+        <package name="org.kevin.entity"/>
+    </typeAliases>
 
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://127.0.0.1:3306/study"/>
-                <property name="username" value="root"/>
-                <property name="password" value="Qq1170917384"/>
+                <property name="driver" value="org.sqlite.JDBC"/>
+                <property name="url" value="jdbc:sqlite:/Users/kevin/kaifa/db/test.db"/>
+                <property name="username" value=""/>
+                <property name="password" value=""/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper class="org.kevin.dao.UserMapper" />
+        <mapper resource="mapper/UserMapper.xml"/>
     </mappers>
 </configuration>

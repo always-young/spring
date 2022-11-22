@@ -15,6 +15,6 @@ public class MainApplication {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
         UserService service = applicationContext.getBean(UserService.class);
         service.save(DataProvider.userData());
-        System.out.println(service.findById(19L));
+        System.out.println(service.findById(2L));
     }
 }

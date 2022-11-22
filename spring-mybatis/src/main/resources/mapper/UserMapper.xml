@@ -4,13 +4,13 @@
 <mapper namespace="org.kevin.dao.UserMapper">
 
     <insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">
-        insert into kevin_test(username, age, `desc`)
+        insert into user(username, age, `desc`)
         values (#{username}, #{age}, #{desc})
     </insert>
 
     <select id="getById" resultType="User" parameterType="Long">
         select *
-        from kevin_test
+        from user
         where id = #{id}
     </select>
 </mapper>
