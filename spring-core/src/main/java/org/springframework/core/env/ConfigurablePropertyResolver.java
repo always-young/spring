@@ -19,29 +19,9 @@ package org.springframework.core.env;
 import org.springframework.core.convert.support.ConfigurableConversionService;
 import org.springframework.lang.Nullable;
 
-/**
- * Configuration interface to be implemented by most if not all {@link PropertyResolver}
- * types. Provides facilities for accessing and customizing the
- * {@link org.springframework.core.convert.ConversionService ConversionService}
- * used when converting property values from one type to another.
- *
- * @author Chris Beams
- * @since 3.1
- */
+
 public interface ConfigurablePropertyResolver extends PropertyResolver {
 
-	/**
-	 * Return the {@link ConfigurableConversionService} used when performing type
-	 * conversions on properties.
-	 * <p>The configurable nature of the returned conversion service allows for
-	 * the convenient addition and removal of individual {@code Converter} instances:
-	 * <pre class="code">
-	 * ConfigurableConversionService cs = env.getConversionService();
-	 * cs.addConverter(new FooConverter());
-	 * </pre>
-	 * @see PropertyResolver#getProperty(String, Class)
-	 * @see org.springframework.core.convert.converter.ConverterRegistry#addConverter
-	 */
 	ConfigurableConversionService getConversionService();
 
 	/**

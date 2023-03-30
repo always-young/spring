@@ -7,10 +7,13 @@ dependencies {
    api(project(":spring-instrument"))
    api(project(":spring-oxm"))
    api(project(":spring-aop"))
+   api(project(":spring-webmvc"))
 
    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
    implementation group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.7'
    implementation group: 'org.aspectj', name: 'aspectjrt', version: '1.9.7'
+// https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core
+   implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '8.5.87'
 
 }
