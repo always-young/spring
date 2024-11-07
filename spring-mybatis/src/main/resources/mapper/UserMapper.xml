@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         SYSTEM
-        "/Users/kevin/code/source_code/spring-5.3/spring-mybatis/src/main/resources/mybatis-3-mapper.dtd">
+        "/Users/macos/code/java/spring/spring-mybatis/src/main/resources/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.kevin.dao.UserMapper">
 
